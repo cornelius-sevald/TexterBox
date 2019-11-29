@@ -1,101 +1,137 @@
-using System.Linq;
+using System.IO;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
-public interface IToken {
-        TokenMatch Tokenize (string word);
+public enum TokenType
+{
+    NoneToken, VerbToken, PrepositionToken, AdjectiveToken, NounToken
 }
 
-struct MatchPair {
-        public TokenMatch match;
-        public IEnumerable<string> tokenWords;
+public class Token
+{
+    // The token type.
+    public TokenType type;
+    // The toke identifier i.e. what this token represents.
+    public string id;
+    // The regex string.
+    string rxStr;
+    // The regex this token matches.
+    Regex rx;
 
-        public MatchPair (TokenMatch m, IEnumerable<string> t) {
-                match = m;
-                tokenWords = t;
-        }
+    public Token(TokenType type, string id) : this(type, id, id) { }
+
+    public Token(TokenType type, string id, string rxString)
+    {
+        this.type = type;
+        this.id = id;
+        this.rxStr = rxString;
+        this.rx = new Regex(rxString, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    }
+
+    public Token Copy()
+    {
+        return new Token(type, id, rxStr);
+    }
+
+    public bool MatchWord(string word)
+    {
+        return rx.IsMatch(word);
+    }
 }
 
-public class TokenMatch {
-        public string word;
-        public List<IToken> tokens;
+public static class Lexer
+{
+    public static List<Token> LexInput(Token[] potentialTokens, string input)
+    {
+        // Remove non-alphanumerical characters.
+        Regex rgx = new Regex("[^a-zæøåA-ZÆØÅ0-9 -]");
+        input = rgx.Replace(input, "");
 
-        public TokenMatch (string word, List<IToken> tokens) {
-                this.word = word;
-                this.tokens = tokens;
-        }
+        // Split input into words.
+        string[] words = input.Split(' ');
 
-        /// <summary>
-        /// Join two TokenMatch objects into one.
-        /// 
-        /// If one TokenMatch object is null, the other is returned.
-        /// If none are null, and the two words are the same, a merged TokenMatch is returned.
-        /// Otherwise, null is returned.
-        /// </summary>
-        /// <param name="m1">The first TokenMatch</param>
-        /// <param name="m2">The second TokenMatch</param>
-        /// <returns>A merged TokenMatch</returns>
-        public static TokenMatch Join (TokenMatch m1, TokenMatch m2) {
-                if (m1 == null) {
-                        return m2;
+        List<Token> tokens = new List<Token>();
+        foreach (string word in words)
+        {
+            foreach (Token token in potentialTokens)
+            {
+                if (token.MatchWord(word))
+                {
+                    // If the token matches, add it and stop looking for new tokens.
+                    tokens.Add(token.Copy());
+                    break;
                 }
-                if (m2 == null) {
-                        return m1;
-                }
-                if (m1.word == m2.word) {
-                        string word = m1.word;
-                        List<IToken> tokens = m1.tokens.Concat(m2.tokens).ToList();
-                        return new TokenMatch(word, tokens);
-                }
-                else {
-                        return null;
-                }
+            }
         }
+        return tokens;
+    }
 }
 
-static class Lexer {
-        public static List<TokenMatch> LexInput (List<IToken> potentialTokens, Queue<string> words) {
-                if (words.Count == 0) {
-                        return null;
+public static class TokenUtils
+{
+    public static List<Token> FromFile(string filePath)
+    {
+        List<Token> tokens = new List<Token>();
+        using (StreamReader sr = File.OpenText(filePath))
+        {
+            string s;
+            TokenType currentType = TokenType.NoneToken;
+            while ((s = sr.ReadLine()) != null)
+            {
+                switch (s)
+                {
+                    case "Verbs":
+                        currentType = TokenType.VerbToken;
+                        break;
+                    case "Nouns":
+                        currentType = TokenType.NounToken;
+                        break;
+                    case "Adjectives":
+                        currentType = TokenType.AdjectiveToken;
+                        break;
+                    case "Prepositions":
+                        currentType = TokenType.PrepositionToken;
+                        break;
+                    default:
+                        if (currentType == TokenType.NoneToken)
+                        {
+                            // If no active token is specified, throw an exception.
+                            throw new TokenReadException("No active token type.");
+                        }
+                        if (!(s.StartsWith('\t') || s.StartsWith("    ")))
+                        {
+                            // If the string is not indendet, throw an exception.
+                            throw new TokenReadException("Invalid token syntax.");
+                        }
+                        // Split the string at the first " : ".
+                        string[] _delimiters = { ": " };
+                        string[] _parts = s.Split(_delimiters, 2, System.StringSplitOptions.None);
+                        if (_parts.Length != 2)
+                        {
+                            // If the string did not split in two, throw an exception.
+                            throw new TokenReadException("Invalid token syntax.");
+                        }
+                        string id = _parts[0].Trim();
+                        string rxStr = _parts[1];
+
+                        Token token = new Token(currentType, id, rxStr);
+                        tokens.Add(token);
+                        break;
                 }
-                if (words.Count == 1) {
-                        string word = words.Dequeue();
-
-                        TokenMatch match = Lexer.GetTokenMatch(potentialTokens, word);
-                        MatchPair tokens = new MatchPair(match, words);
-
-                        return LexTokens(potentialTokens, words, tokens);
-                }
-                else {
-                        string word1 = words.Dequeue();
-                        // Save a copy of words without `word2` removed.
-                        Queue<string> wordsCopy = new Queue<string>(words);
-                        string word2 = words.Dequeue();
-
-                        // Prioritize look-ahead.
-                        TokenMatch match1 = GetTokenMatch(potentialTokens, word1 + " " + word2);
-                        TokenMatch match2 = GetTokenMatch(potentialTokens, word1);
-
-                        MatchPair tokens1 = new MatchPair(match1, words);
-                        MatchPair tokens2 = new MatchPair(match2, wordsCopy);
-
-                        return LexTokens(potentialTokens, wordsCopy, tokens1, tokens2);
-                }
+            }
         }
+        return tokens;
+    }
+}
 
-        public static TokenMatch GetTokenMatch (List<IToken> potentialTokens, string word) {
-                TokenMatch match = null;
-                foreach (IToken token in potentialTokens) {
-                        match = TokenMatch.Join(match, token.Tokenize(word));
-                }
-
-                return match;
-        }
-
-        public static List<TokenMatch> LexTokens (List<IToken> potentialTokens, Queue<string> words, MatchPair tokens) {
-                return null;
-        }
-
-        public static List<TokenMatch> LexTokens (List<IToken> potentialTokens, Queue<string> words, MatchPair tokens1, MatchPair tokens2) {
-                return null;
-        }
+/* Exception used when creating tokens from a file. */
+[System.Serializable]
+public class TokenReadException : System.Exception
+{
+    public TokenReadException() { }
+    public TokenReadException(string message) : base(message) { }
+    public TokenReadException(string message, System.Exception inner) : base(message, inner) { }
+    protected TokenReadException(
+        System.Runtime.Serialization.SerializationInfo info,
+        System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
 }
