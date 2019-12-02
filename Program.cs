@@ -13,6 +13,8 @@ namespace TexterBox
             List<Token> tokens = TokenUtils.FromFile(tokensFilePath);
             string text = File.ReadAllText(textFilePath);
             List<Token> tokenized = Lexer.LexInput(tokens.ToArray(), text);
+            Sentence sentence = Sentence.EmptySentence();
+            bool isValidSentence = Parser.ParseTokens(tokenized.ToArray(), ref sentence);
 
             Console.WriteLine("Potential tokens:");
             Console.WriteLine("==============================");
@@ -32,6 +34,29 @@ namespace TexterBox
                 Console.WriteLine(token.id);
             }
             Console.WriteLine("==============================");
+
+            Console.WriteLine("Parsed text:");
+            if (isValidSentence)
+            {
+                Console.WriteLine("Verb:        " + sentence.verb.id);
+                Console.WriteLine("Prepositions:    ");
+                foreach (Token preposition in sentence.prepositions)
+                {
+                    Console.WriteLine("             " + preposition.id);
+                }
+                Console.WriteLine("Adjectives:      ");
+                foreach (Token adjective in sentence.adjectives)
+                {
+                    Console.WriteLine("             " + adjective.id);
+                }
+                Console.WriteLine("Noun:        " + sentence.noun.id);
+            }
+            else
+            {
+                Console.WriteLine("Not a valid sentence");
+            }
+            Console.WriteLine("==============================");
+
         }
     }
 }
