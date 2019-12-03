@@ -49,7 +49,7 @@ static class Parser
             }
             sentence.prepositions = prepositions.ToArray();
 
-            // Prepositions.
+            // Adjectives.
             List<Token> adjectives = new List<Token>();
             while (tokens[i].type == TokenType.AdjectiveToken)
             {

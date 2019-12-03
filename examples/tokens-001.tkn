@@ -1,12 +1,22 @@
 Nouns
-    æble : æble[t]?
-    gut : gut[ten]?|guttermand[en]?
+    æble : æble(t)?
+    gut : gut(ten)?|guttermand(en)?
+    noter : note(r)?|notesbog|papir(er)?
+    inventar : inventar|rygsæk|ting
+
 Adjectives
-    grøn : grøn[ne]?
-    rød : rød[e]?
+    grøn : grøn(ne)?
+    rød : rød(e)?
     blå : blå
+    venstre : venstre|bagbord
+    højre : højre|styrbord
 Verbs
-    spis : spis
+    spis : spis|drik|slug|fort(er|ær|nite)|indtag|æd|haps
     slå : slå
     hiv : hiv
     hjælp : hjælp
+    kig : kig(ge)?(lure)?|se|observer|gluk(ke)?|glug(ge)?
+    gå : gå|bevæg(e)?|løb|ryk|spadser|besøg
+    angrib : angrib|slå|kæmp|bekrig|overfald
+    tag : tag|nub(be)?
+    skub : skub(be)?
