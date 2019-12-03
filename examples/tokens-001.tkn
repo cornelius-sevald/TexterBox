@@ -1,11 +1,15 @@
 Nouns
-    æble : æble[t]?
-    gut : gut[ten]?|guttermand[en]?
+    æble : æble(t)?
+    gut : gut(ten)?|guttermand(en)?
+    program : program|spil|applikation
 Adjectives
-    grøn : grøn[ne]?
-    rød : rød[e]?
+    grøn : grøn(ne)?
+    rød : rød(e)?
     blå : blå
+    dum : dum(me)
 Verbs
+    luk : luk
+    stop : stop|stubbay
     spis : spis
     slå : slå
     hiv : hiv

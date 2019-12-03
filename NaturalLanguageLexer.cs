@@ -41,7 +41,7 @@ public class Token
 
 public static class Lexer
 {
-    public static List<Token> LexInput(Token[] potentialTokens, string input)
+    public static Token[] LexInput(Token[] potentialTokens, string input)
     {
         // Remove non-alphanumerical characters.
         Regex rgx = new Regex("[^a-zæøåA-ZÆØÅ0-9 -]");
@@ -63,13 +63,13 @@ public static class Lexer
                 }
             }
         }
-        return tokens;
+        return tokens.ToArray();
     }
 }
 
 public static class TokenUtils
 {
-    public static List<Token> FromFile(string filePath)
+    public static Token[] FromFile(string filePath)
     {
         List<Token> tokens = new List<Token>();
         using (StreamReader sr = File.OpenText(filePath))
@@ -120,7 +120,7 @@ public static class TokenUtils
                 }
             }
         }
-        return tokens;
+        return tokens.ToArray();
     }
 }
 
