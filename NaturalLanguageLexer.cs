@@ -80,6 +80,8 @@ public static class TokenUtils
             {
                 switch (s)
                 {
+                    case "":
+                        break;
                     case "Verbs":
                         currentType = TokenType.VerbToken;
                         break;
