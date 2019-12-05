@@ -7,12 +7,10 @@ public enum TokenType
     NoneToken, VerbToken, PrepositionToken, AdjectiveToken, NounToken
 }
 
-public class Token
+public class Token : TexterObject
 {
     // The token type.
     public TokenType type;
-    // The toke identifier i.e. what this token represents.
-    public string id;
     // The regex string.
     string rxStr;
     // The regex this token matches.
@@ -23,14 +21,14 @@ public class Token
     public Token(TokenType type, string id, string rxString)
     {
         this.type = type;
-        this.id = id;
+        this.Id = id;
         this.rxStr = rxString;
         this.rx = new Regex(rxString, RegexOptions.Compiled | RegexOptions.IgnoreCase);
     }
 
     public Token Copy()
     {
-        return new Token(type, id, rxStr);
+        return new Token(type, Id, rxStr);
     }
 
     public bool MatchWord(string word)

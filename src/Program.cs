@@ -22,11 +22,11 @@ namespace TexterBox
                     Console.WriteLine("huh?");
                     continue;
                 }
-                if ((sentence.verb.id == "luk" ||
-                     sentence.verb.id == "stop") &&
-                     sentence.noun.id == "program")
+                if ((sentence.verb.Id == "luk" ||
+                     sentence.verb.Id == "stop") &&
+                     sentence.noun.Id == "program")
                 {
-                    if (sentence.adjectives.Any(a => a.id == "dum"))
+                    if (sentence.adjectives.Any(a => a.Id == "dum"))
                     {
                         Console.WriteLine("godt at dette program ikke er dumt B-)");
                     }
@@ -36,14 +36,14 @@ namespace TexterBox
                     }
                 }
 
-                Console.Write("\"" + sentence.verb.id + " ");
+                Console.Write("\"" + sentence.verb.Id + " ");
                 foreach (Token prep in sentence.prepositions) {
-                    Console.Write(prep.id + " ");
+                    Console.Write(prep.Id + " ");
                 }
                 foreach (Token adj in sentence.adjectives) {
-                    Console.Write(adj.id + " ");
+                    Console.Write(adj.Id + " ");
                 }
-                Console.WriteLine(sentence.noun.id + "\" - meget filosofisk...");
+                Console.WriteLine(sentence.noun.Id + "\" - meget filosofisk...");
             }
             Console.WriteLine("bye.");
         }
