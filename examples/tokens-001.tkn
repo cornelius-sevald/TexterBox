@@ -4,6 +4,13 @@ Nouns
     program : program|spil|applikation
     noter : note(r)?|notesbog|papir(er)?
     inventar : inventar|rygsæk|ting
+    by : by|hus(e)?
+    skov : skov|træ(er)?
+    bakke : bakke(r)?
+    mark : mark(er)?|corn
+    tundra : tundra|sne
+    ørken : ørken|sand
+    omkring : omrking|rundt|området
 
 Adjectives
     grøn : grøn(ne)?
