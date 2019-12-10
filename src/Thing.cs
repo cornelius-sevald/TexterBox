@@ -1,4 +1,4 @@
-class Thing : TexterObject
+public class Thing : TexterObject
 {
     public Token noun;
     public Token[] prepositions;

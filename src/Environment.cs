@@ -1,4 +1,4 @@
 using System.Collections.Generic;
 
-class Environment {
+public class Environment {
 }

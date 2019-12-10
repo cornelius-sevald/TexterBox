@@ -4,7 +4,7 @@ sentence = verb [preposition] object
 object   = [adjective] noun
 */
 
-struct Sentence
+public struct Sentence
 {
     public Token verb;
     public Token[] prepositions;
@@ -26,7 +26,7 @@ struct Sentence
     }
 }
 
-static class Parser
+public static class Parser
 {
     public static bool ParseTokens(Token[] tokens, ref Sentence sentence)
     {

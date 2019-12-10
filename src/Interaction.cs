@@ -1,12 +1,18 @@
-class Interaction : TexterObject
+using System.Linq;
+
+public delegate void DoInteraction(Thing thing);
+
+public class Interaction : TexterObject
 {
     public Thing thing;
     public Token verb;
+    public DoInteraction interactFunc;
 
-    public Interaction(string id, Thing thing, Token verb) {
+    public Interaction(string id, Thing thing, Token verb, DoInteraction interactFunc) {
         this.Id = id;
         this.thing = thing;
         this.verb = verb;
+        this.interactFunc = interactFunc;
     }
 
     public InteractionMatch Match (Sentence sentence)
@@ -15,38 +21,31 @@ class Interaction : TexterObject
         {
             return new InteractionFaliure(sentence.noun.Copy());
         }
-        foreach (Token prep1 in thing.prepositions)
+        foreach (Token prep in sentence.prepositions)
         {
-            foreach (Token prep2 in sentence.prepositions)
-            {
-                if (prep1.Id != prep2.Id)
-                {
-                    return new InteractionFaliure(prep2.Copy());
-                }
+            if (!thing.prepositions.Contains(prep)) {
+                return new InteractionFaliure(prep.Copy());
             }
         }
-        foreach (Token adj1 in thing.adjectives)
+        foreach (Token adj in sentence.adjectives)
         {
-            foreach (Token adj2 in sentence.adjectives)
-            {
-                if (adj1.Id != adj2.Id)
-                {
-                    return new InteractionFaliure(adj2.Copy());
-                }
+            if (!thing.adjectives.Contains(adj)) {
+                return new InteractionFaliure(adj.Copy());
             }
         }
         if (verb.Id != sentence.verb.Id) {
             return new InteractionFaliure(sentence.verb.Copy());
         }
+        interactFunc(thing);
         return new InteractionSucess();
     }
 }
 
-abstract class InteractionMatch {}
+public abstract class InteractionMatch {}
 
-class InteractionSucess : InteractionMatch {}
+public class InteractionSucess : InteractionMatch {}
 
-class InteractionFaliure : InteractionMatch
+public class InteractionFaliure : InteractionMatch
 {
     public Token mismatch;
 
