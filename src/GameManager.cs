@@ -158,7 +158,8 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             new Interaction(food, "hent", player.CollectThing),
             // Pants interactions
             new Interaction(pants, "spis", player.EatThing),
-            new Interaction(pants, "kast", player.ThrowThing)
+            new Interaction(pants, "kast", player.ThrowThing),
+            new Interaction(pants, "hent", player.CollectThing)
         };
 
     }

@@ -1,4 +1,4 @@
-public class Pants : Thing, IEdible, IThrowable
+public class Pants : Thing, IEdible, IThrowable, ICollectable
 {
     static private string id = "bukser";
 
@@ -25,21 +25,44 @@ public class Pants : Thing, IEdible, IThrowable
     public Pants(string noun)
      : base(id, noun) { }
 
-     public void Eat(){
-         if(eaten){
+    public void Eat()
+    {
+        if (eaten)
+        {
             Output.WriteMessageLn("Du har allerede spist dine bukser...");
-         } else {
+        }
+        else
+        {
             Output.WriteMessageLn("Du spiser dine bukser.");
             GameManager.Instance.Lose("Når du æder bukserne for at stoppe din sult får bukseforgiftning og dør instantly.");
-         }
-     }
+        }
+    }
 
-     public void Throw(){
-         if(worn){
-             GameManager.Instance.player.pants = false;
-             Output.WriteMessageLn("Du smider dine bukser væk ind i en busk.");
-         } else {
-             Output.WriteMessageLn("Du har ikke nogle bukser på.");
-         }
-     }
+    public void Throw()
+    {
+        if (worn)
+        {
+            worn = false;
+            GameManager.Instance.player.pants = false;
+            Output.WriteMessageLn("Du smider dine bukser væk ind i en busk.");
+        }
+        else
+        {
+            Output.WriteMessageLn("Du har ikke nogle bukser på.");
+        }
+    }
+
+    public void Collect()
+    {
+        if (worn)
+        {
+            worn = false;
+            GameManager.Instance.player.pants = false;
+            Output.WriteMessageLn("Du tager forsigtigt dine bukser af, og gemmer dem væk.");
+        }
+        else
+        {
+            Output.WriteMessageLn("Du har ikke nogle bukser på.");
+        }
+    }
 }
