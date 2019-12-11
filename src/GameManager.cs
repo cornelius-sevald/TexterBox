@@ -16,7 +16,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
     private GameState state;
     private Token[] validTokens;
-    private List<Thing> things;
+    public List<Thing> things;
     private List<Interaction> interactions;
 
     private int timeLeft;
@@ -60,13 +60,23 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             }
         );
 
-         Tree tree = new Tree(
+        Nut nut = new Nut(
+            "nød",
+            new string[] { },
+            new string[] {
+                "brun",
+                "kold"
+            }
+        );
+
+        Tree tree = new Tree(
             "træ",
             new string[] { },
             new string[] {
                 "brunt",
                 "koldt"
-            }
+            },
+            nut
         );
 
         action.player = player;
@@ -91,7 +101,13 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             // Tree interactions:
             new Interaction(tree, "spis", player.EatThing),
             new Interaction(tree, "åben", player.OpenThing),
-            new Interaction(tree, "slå", player.PunchThing)
+            new Interaction(tree, "slå", player.PunchThing),
+            // Nut interactions:
+            new Interaction(nut, "spis", player.EatThing),
+            new Interaction(nut, "åben", player.OpenThing),
+            new Interaction(nut, "slå", player.PunchThing),
+            new Interaction(nut, "hent", player.CollectThing),
+            new Interaction(nut, "kast", player.ThrowThing)
         };
     }
 
@@ -229,7 +245,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
     public void Smite(Thing thing)
     {
-        GameManager.Instance.Lose("Fuck dig Klaus");
+        GameManager.Instance.Lose("Fuck dig klaus");
     }
 
     /// <summary>

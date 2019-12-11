@@ -8,6 +8,8 @@ public class Tree : Thing, IEdible, IOpenable, IPunchable
 {
     static private string id = "Tree";
 
+    Nut nut;
+
     /// <summary>
     /// Has the tree been opened?
     /// </summary>
@@ -27,14 +29,14 @@ public class Tree : Thing, IEdible, IOpenable, IPunchable
     /// Construct a tree object with an identifying noun,
     /// prepositions and adjectives.
     /// </summary>
-    public Tree(string noun, string[] prepositions, string[] adjectives)
-     : base(id, noun, prepositions, adjectives) { }
+    public Tree(string noun, string[] prepositions, string[] adjectives, Nut nut)
+     : base(id, noun, prepositions, adjectives) {this.nut = nut;}
 
     /// <summary>
     /// Construct a tree object with an identifying noun.
     /// </summary>
-    public Tree(string noun)
-     : base(id, noun) { }
+    public Tree(string noun, Nut nut)
+     : base(id, noun) {this.nut = nut;}
 
     /// <summary>
     /// Eat the tree.
@@ -59,6 +61,7 @@ public class Tree : Thing, IEdible, IOpenable, IPunchable
         {
             Output.WriteMessageLn("Du åbner træet og finder en nød");
             nutSpawn = true;
+            GameManager.Instance.things.Add(nut);
         }
     }
 
@@ -73,6 +76,7 @@ public class Tree : Thing, IEdible, IOpenable, IPunchable
         {
             Output.WriteMessageLn("Du slår træet og der falder en nød ned");
             nutSpawn = true;
+            GameManager.Instance.things.Add(nut);
             punchedTree++;
         }
         if(punchedTree >= 3)
