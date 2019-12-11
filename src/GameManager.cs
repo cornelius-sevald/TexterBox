@@ -78,6 +78,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         interactions = new List<Interaction> {
             // Actions
             new Interaction(action, "vent", this.Wait),
+            new Interaction(action, "owo", this.Smite),
             // Program interactions:
             new Interaction(this, "luk",  player.CloseThing),
             new Interaction(this, "stop", player.StopThing),
@@ -224,6 +225,11 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
     public void Wait(Thing thing)
     {
         timeLeft -= 35;
+    }
+
+    public void Smite(Thing thing)
+    {
+        GameManager.Instance.Lose("Fuck dig Klaus");
     }
 
     /// <summary>
