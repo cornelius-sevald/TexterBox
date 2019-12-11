@@ -116,3 +116,11 @@ public interface IStoppable {
     /// </summary>
     void Stop();
 }
+
+public interface ICollectable {
+
+    /// <summary>
+    /// Collect the thing.
+    /// </summary>
+    void Collect();
+}

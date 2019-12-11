@@ -77,4 +77,12 @@ public class Player : Thing
             t.Stop();
         }
     }
+
+    public void CollectThing(Thing thing)
+    {
+        if (thing is ICollectable t)
+        {
+            t.Collect();
+        }
+    }
 }

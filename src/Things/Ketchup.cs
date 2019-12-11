@@ -4,7 +4,7 @@
 /// Ketchup can be thrown, eaten and opened.
 /// </para>
 /// </summary>
-public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable
+public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable, ICollectable
 {
     static private string id = "ketchup";
 
@@ -22,6 +22,11 @@ public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable
     /// Has the ketchup been eaten?
     /// </summary>
     public bool eaten = false;
+
+    /// <summary>
+    /// Has the ketchup been wasted?
+    /// </summary>
+    public bool wasted = false;
 
     /// <summary>
     /// Construct a ketchup object with an identifying noun,
@@ -43,8 +48,12 @@ public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable
     {
         if (thrown)
         {
-            Output.WriteMessageLn("Hvem ville kaste god ketchup mere end èn gang?");
-            return;
+            Output.WriteMessageLn("Du holder ikke nogen ketchup");
+        }
+        else if (open)
+        {
+            Output.WriteMessageLn("Du smider ketchup-flasken og ketchup flyver ud over det hele");
+            this.wasted = true;
         }
         else
         {
@@ -61,6 +70,11 @@ public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable
         if (!open)
         {
             Output.WriteMessageLn("Det ser ud til at denne ketchup er lukket, og kan derfor ikke spises.");
+        }
+        else if (wasted)
+        {
+            Output.WriteMessageLn("Du slikker ketchupen op fra jorden; meget klamt men det slukker sulten.");
+            GameManager.Instance.Win("Med den klamme ketchup i din hals, vandt du videospillet - hvis det virkelig kan kaldes at vinde B-)...");
         }
         else if (eaten)
         {
@@ -107,6 +121,18 @@ public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable
         {
             Output.WriteMessageLn("Du tabte låget, og kan ikke finde det mere.");
             Output.WriteMessageLn("Du må nøjes med åben ketchup.");
+        }
+    }
+    public void Collect()
+    {
+        if (thrown)
+        {
+            Output.WriteMessageLn("Du samler ketchupen op");
+            this.thrown = false;
+        }
+        else 
+        {
+            Output.WriteMessageLn("Du kan ikke samle noget op som du har");
         }
     }
 
