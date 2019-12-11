@@ -78,7 +78,6 @@ public class Player : Thing
         }
     }
 
-
     /// <summary>
     /// Punch something, if punchable.
     /// </summary>
@@ -88,6 +87,18 @@ public class Player : Thing
         if (thing is IPunchable t)
         {
             t.Punch();
+        }
+    }
+
+    /// <summary>
+    /// Collect something, if collectable.
+    /// </summary>
+    /// <param name="thing">Thing to collect.</param>
+    public void CollectThing(Thing thing)
+    {
+        if (thing is ICollectable t)
+        {
+            t.Collect();
         }
     }
 }

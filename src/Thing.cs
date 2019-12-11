@@ -130,3 +130,17 @@ public interface IPunchable {
     /// </summary>
     void Punch();
 }
+
+/// <summary>
+/// Thing that can be collected.
+/// <para>
+/// This is only meant to be implemented by the <c>Thing</c> class.
+/// </para>
+/// </summary>
+public interface ICollectable {
+
+    /// <summary>
+    /// Collect the thing.
+    /// </summary>
+    void Collect();
+}

@@ -76,7 +76,8 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             new Interaction(ketchup, "kast", player.ThrowThing),
             new Interaction(ketchup, "spis", player.EatThing),
             new Interaction(ketchup, "åben", player.OpenThing),
-            new Interaction(ketchup, "luk",  player.CloseThing)
+            new Interaction(ketchup, "luk",  player.CloseThing),
+            new Interaction(ketchup, "hent", player.CollectThing)
         };
     }
 
