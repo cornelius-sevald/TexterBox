@@ -59,10 +59,10 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         Pants pants = new Pants(
             "bukser",
             new string[] { },
-            new string[] { 
+            new string[] {
                 "orange",
                 "god",
-                "wholesome" 
+                "wholesome"
             }
         );
 
@@ -85,15 +85,15 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             }
         );
 
-         Tree tree = new Tree(
-            "træ",
-            new string[] { },
-            new string[] {
+        Tree tree = new Tree(
+           "træ",
+           new string[] { },
+           new string[] {
                 "brun",
                 "kold"
-            },
-            nut
-        );
+           },
+           nut
+       );
 
         Car car = new Car(
             "bil",
@@ -122,23 +122,23 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             "legeplads",
             "en legeplads",
             "legeplads",
-            new List<Thing> {tree}
+            new List<Thing> { tree }
         );
         Location supermarket = new Location(
             "supermarket",
             "supermarkedet",
             "supermarket",
-            new List<Thing> {road, car, food}
+            new List<Thing> { road, car, food }
         );
         Location home = new Location(
             "hjem",
             "dit hjem",
             "hjem",
-            new List<Thing> {mom}
+            new List<Thing> { mom }
         );
 
 
-        things = new List<Thing> { this, action, player, ketchup, pants, legeplads, supermarket, home};
+        things = new List<Thing> { this, action, player, ketchup, pants, legeplads, supermarket, home };
 
         /* The interactions in the game: */
 
@@ -296,7 +296,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
                 faliures[i] = new InteractionFaliure(new Token(TokenType.NounToken, interaction.thing.noun));
                 continue;
             }
-            
+
             InteractionMatch match = interaction.Match(sentence);
 
             if (match is InteractionSucess)
@@ -351,21 +351,32 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         GameManager.Instance.Lose("Fuck dig Klaus");
     }
 
-    public void Look(Thing thing){
+    public void Look(Thing thing)
+    {
         Output.WriteMessage("Du ser ");
-        foreach (Thing lookThing in things)
+        if (things.Count == 0)
         {
-           switch(lookThing.Id) {
-                case "action":
-                case "player":
-                case "spil":
-                    break;
-                default:
-                Output.WriteMessage(lookThing.Id + ", ");
-                break;
-           }
+            Output.WriteMessageLn("ikke noget.");
         }
-        Output.WriteMessageLn(" ");
+        else
+        {
+            int i = 0;
+            for (; i < things.Count - 1; i++)
+            {
+                Thing lookThing = things[i];
+                switch (lookThing.Id)
+                {
+                    case "action":
+                    case "player":
+                    case "spil":
+                        break;
+                    default:
+                        Output.WriteMessage(lookThing.Id + ", ");
+                        break;
+                }
+            }
+            Output.WriteMessageLn(things[i].Id + ".");
+        }
     }
 
     public void Shit(Thing thing)
@@ -374,7 +385,9 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         {
             Output.WriteMessageLn("Du skider");
             GameManager.Instance.Lose("Med en umådelig kraft ryger lorten ud før du opdager at du ikke har taget dine bukser af, det er dog allerede for sent, der opstår en brun plet ved din bagside og dit syn falmer...");
-        } else {
+        }
+        else
+        {
             Output.WriteMessageLn("Du skider på jorden");
             GameManager.Instance.Win("Du ved ikke hvorfor, men med lorten på vejen fylder det dig med en vis tilfredsstilelse, du mærker ikke sulten mere...");
         }

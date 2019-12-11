@@ -6,7 +6,7 @@
 /// </summary>
 public class Nut : Thing, IThrowable, IEdible, IOpenable, IPunchable, ICollectable
 {
-    static private string id = "nut";
+    static private string id = "nød";
 
     /// <summary>
     /// Has the nut been destroyed?
