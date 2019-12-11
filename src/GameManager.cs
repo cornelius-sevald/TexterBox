@@ -60,9 +60,18 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             }
         );
 
+         Tree tree = new Tree(
+            "træ",
+            new string[] { },
+            new string[] {
+                "brunt",
+                "koldt"
+            }
+        );
+
         action.player = player;
 
-        things = new List<Thing> { this, action, player, ketchup };
+        things = new List<Thing> { this, action, player, ketchup, tree};
 
         /* The interactions in the game: */
 
@@ -77,7 +86,11 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             new Interaction(ketchup, "spis", player.EatThing),
             new Interaction(ketchup, "åben", player.OpenThing),
             new Interaction(ketchup, "luk",  player.CloseThing),
-            new Interaction(ketchup, "hent", player.CollectThing)
+            new Interaction(ketchup, "hent", player.CollectThing),
+            // Tree interactions:
+            new Interaction(tree, "spis", player.EatThing),
+            new Interaction(tree, "åben", player.OpenThing),
+            new Interaction(tree, "slå", player.PunchThing)
         };
     }
 
@@ -124,7 +137,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         {
             if (--timeLeft <= 0)
             {
-                Loose("Du ventede i for lang tid, og døde af sult.");
+                Lose("Du ventede i for lang tid, og døde af sult.");
                 break;
             }
             if (timeLeft <= 80)
@@ -228,16 +241,16 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
 
     /// <summary>
-    /// Loose the game.
+    /// Lose the game.
     /// </summary>
-    /// <param name="looseMessage">The message to display to the player.</param>
-    public void Loose(string looseMessage)
+    /// <param name="loseMessage">The message to display to the player.</param>
+    public void Lose(string loseMessage)
     {
         state = GameState.GameLost;
 
         Thread.Sleep(3000);
         Console.Clear();
-        Output.WriteMessageLn(looseMessage);
+        Output.WriteMessageLn(loseMessage);
     }
 
     /// <summary>

@@ -1,7 +1,7 @@
 /// <summary>
 /// A ketchup object that the player can interact with.
 /// <para>
-/// Ketchup can be thrown, eaten and opened.
+/// Ketchup can be thrown, eaten, opened, closed and collected.
 /// </para>
 /// </summary>
 public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable, ICollectable
