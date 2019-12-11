@@ -18,6 +18,8 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
     private Thing[] things;
     private Interaction[] interactions;
 
+    private int timeLeft;
+
     /// <summary>
     /// Construct a new player with an identifying noun,
     /// prepositions and adjectives.
@@ -31,6 +33,8 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
     void SetUpGame()
     {
+        timeLeft = 100;
+
         /* The valid tokens: */
 
         validTokens = TokenUtils.FromFile(tokenFilePath);
@@ -62,6 +66,8 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         /* The interactions in the game: */
 
         interactions = new Interaction[] {
+            // Actions
+            new Interaction(action, "vent", this.Wait),
             // Program interactions:
             new Interaction(this, "luk",  player.CloseThing),
             new Interaction(this, "stop", player.StopThing),
@@ -81,6 +87,11 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
     {
         while (state == GameState.GameGaming)
         {
+            if (--timeLeft <= 0)
+            {
+                Loose("Du ventede i for lang tid, og døde af sult.");
+                break;
+            }
             string input = Input.GetInput();
             if (input == null)
             {
@@ -150,6 +161,16 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         }
     }
 
+
+    /// <summary>
+    /// Wait some time.
+    /// </summary>
+    /// <param name="thing">The object that caused the waiting.</param>
+    public void Wait(Thing thing)
+    {
+        timeLeft -= 35;
+    }
+
     /// <summary>
     /// Win the game.
     /// </summary>
@@ -161,6 +182,20 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         Thread.Sleep(3000);
         Console.Clear();
         Output.WriteMessageLn(winMessage);
+    }
+
+
+    /// <summary>
+    /// Loose the game.
+    /// </summary>
+    /// <param name="looseMessage">The message to display to the player.</param>
+    public void Loose(string looseMessage)
+    {
+        state = GameState.GameLost;
+
+        Thread.Sleep(3000);
+        Console.Clear();
+        Output.WriteMessageLn(looseMessage);
     }
 
     /// <summary>

@@ -73,7 +73,7 @@ public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable, IColle
         }
         else if (wasted)
         {
-            Output.WriteMessageLn("Du slikker ketchupen op fra jorden; meget klamt men det slukker sulten.");
+            Output.WriteMessageLn("Du slikker ketchuppen op fra jorden; meget klamt men det slukker sulten.");
             GameManager.Instance.Win("Med den klamme ketchup i din hals, vandt du videospillet - hvis det virkelig kan kaldes at vinde B-)...");
         }
         else if (eaten)
@@ -127,7 +127,7 @@ public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable, IColle
     {
         if (thrown)
         {
-            Output.WriteMessageLn("Du samler ketchupen op");
+            Output.WriteMessageLn("Du samler ketchuppen op");
             this.thrown = false;
         }
         else 
