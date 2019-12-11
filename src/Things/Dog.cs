@@ -47,5 +47,10 @@ public class Dog : Thing, IEdible, IPunchable
             Output.WriteMessageLn("Du forsøger at spise hunden, men den er ikke samarbejdsvillig.");
             GameManager.Instance.Loose("Hunden gik sicko mode, og dræbte dig.");
         }
+        else
+        {
+            Output.WriteMessageLn("Du spiser hunden.");
+            GameManager.Instance.Win("Med hundens varme kød i din mave, vandt du videospillet B-)...");
+        }
     }
 }
