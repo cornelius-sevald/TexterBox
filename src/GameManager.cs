@@ -22,7 +22,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
     /// Construct a new player with an identifying noun,
     /// prepositions and adjectives.
     /// </summary>
-    public GameManager(Token noun, Token[] prepositions, Token[] adjectives)
+    public GameManager(string noun, string[] prepositions, string[] adjectives)
      : base(id, noun, prepositions, adjectives)
     {
         SetUpGame();
@@ -37,42 +37,39 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
         /* The things in the game: */
 
+        ActionThing action = ActionThing.Instance;
+
         Player player = new Player(
-            new Token(TokenType.NounToken, "spiller"),
-            new Token[] { },
-            new Token[] { }
+            "spiller",
+            new string[] { },
+            new string[] { }
         );
 
         Ketchup ketchup = new Ketchup(
-            new Token(TokenType.NounToken, "ketchup"),
-            new Token[] { },
-            new Token[] {
-                new Token(TokenType.AdjectiveToken, "rød"),
-                new Token(TokenType.AdjectiveToken, "god"),
-                new Token(TokenType.AdjectiveToken, "kold")
-                }
+            "ketchup",
+            new string[] { },
+            new string[] {
+                "rød",
+                "god",
+                "kold"
+            }
         );
 
-        things = new Thing[] { this, player, ketchup };
+        action.player = player;
+
+        things = new Thing[] { this, action, player, ketchup };
 
         /* The interactions in the game: */
 
-        Dictionary<string, Token> verbs = new Dictionary<string, Token>();
-        verbs.Add("kast", new Token(TokenType.VerbToken, "kast"));
-        verbs.Add("spis", new Token(TokenType.VerbToken, "spis"));
-        verbs.Add("åben", new Token(TokenType.VerbToken, "åben"));
-        verbs.Add("luk",  new Token(TokenType.VerbToken, "luk"));
-        verbs.Add("stop", new Token(TokenType.VerbToken, "stop"));
-
         interactions = new Interaction[] {
             // Program interactions:
-            new Interaction(this, verbs["luk"],  player.CloseThing),
-            new Interaction(this, verbs["stop"], player.StopThing),
+            new Interaction(this, "luk",  player.CloseThing),
+            new Interaction(this, "stop", player.StopThing),
             // Ketchup interactions:
-            new Interaction(ketchup, verbs["kast"], player.ThrowThing),
-            new Interaction(ketchup, verbs["spis"], player.EatThing),
-            new Interaction(ketchup, verbs["åben"], player.OpenThing),
-            new Interaction(ketchup, verbs["luk"],  player.CloseThing)
+            new Interaction(ketchup, "kast", player.ThrowThing),
+            new Interaction(ketchup, "spis", player.EatThing),
+            new Interaction(ketchup, "åben", player.OpenThing),
+            new Interaction(ketchup, "luk",  player.CloseThing)
         };
     }
 
@@ -84,6 +81,11 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         while (state == GameState.GameGaming)
         {
             string input = Input.GetInput();
+            if (input == null)
+            {
+                state = GameState.GameLost;
+                break;
+            }
             Token[] tokenized = Lexer.LexInput(validTokens, input);
             Sentence sentence = Sentence.EmptySentence();
             if (!Parser.ParseTokens(tokenized, ref sentence))
@@ -193,9 +195,9 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
                 if (instance == null)
                 {
                     instance = new GameManager(
-                        new Token(TokenType.NounToken, "spil"),
-                        new Token[] {},
-                        new Token[] {}
+                        "spil",
+                        new string[] { },
+                        new string[] { }
                     );
                 }
                 return instance;
@@ -212,7 +214,7 @@ public enum GameState
     /// <summary>
     /// Currently gaming, i.e. the game is running.
     /// </summary>
-    GameGaming, 
+    GameGaming,
     /// <summary>
     /// The game is lost.
     /// </summary>

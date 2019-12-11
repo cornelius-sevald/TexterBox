@@ -81,6 +81,9 @@ public class Token : TexterObject
 /// </summary>
 public static class Lexer
 {
+
+    static Token actionToken = new Token(TokenType.NounToken, "", "a^");
+
     /// <summary>
     /// Tokenize an input string into an array of tokens.
     /// </summary>
@@ -112,6 +115,9 @@ public static class Lexer
                 }
             }
         }
+        // Add the magical action token.
+        tokens.Add(actionToken);
+
         // Return the array of tokens.
         return tokens.ToArray();
     }

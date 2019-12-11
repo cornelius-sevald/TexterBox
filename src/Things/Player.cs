@@ -9,13 +9,13 @@ public class Player : Thing
     /// Construct a new player with an identifying noun,
     /// prepositions and adjectives.
     /// </summary>
-    public Player(Token noun, Token[] prepositions, Token[] adjectives)
+    public Player(string noun, string[] prepositions, string[] adjectives)
      : base(id, noun, prepositions, adjectives) { }
 
     /// <summary>
     /// Construct a new player with an identifying noun.
     /// </summary>
-    public Player(Token noun)
+    public Player(string noun)
      : base(id, noun) { }
 
     /// <summary>

@@ -15,7 +15,7 @@ public class Interaction
     /// The verb that triggers the interaction.
     /// </summary>
 
-    public Token verb;
+    public string verb;
     /// <summary>
     /// The action that will happen if the interaction matches.
     /// </summary>
@@ -27,7 +27,7 @@ public class Interaction
     /// <param name="thing">The thing to interact with.</param>
     /// <param name="verb">The trigger of the interaction.</param>
     /// <param name="interactFunc">The action of the interaction.</param>
-    public Interaction(Thing thing, Token verb, Action<Thing> interactFunc) {
+    public Interaction(Thing thing, string verb, Action<Thing> interactFunc) {
         this.thing = thing;
         this.verb = verb;
         this.interactFunc = interactFunc;
@@ -43,23 +43,23 @@ public class Interaction
     /// <returns>An <c>InteractionMatch</c> status.</returns>
     public InteractionMatch Match (Sentence sentence)
     {
-        if (thing.noun.Id != sentence.noun.Id)
+        if (thing.noun != sentence.noun.Id)
         {
             return new InteractionFaliure(sentence.noun.Copy());
         }
         foreach (Token prep in sentence.prepositions)
         {
-            if (!thing.prepositions.Any(t => t.Id == prep.Id)) {
+            if (!thing.prepositions.Any(s => s == prep.Id)) {
                 return new InteractionFaliure(prep.Copy());
             }
         }
         foreach (Token adj in sentence.adjectives)
         {
-            if (!thing.adjectives.Any(t => t.Id == adj.Id)) {
+            if (!thing.adjectives.Any(s => s == adj.Id)) {
                 return new InteractionFaliure(adj.Copy());
             }
         }
-        if (verb.Id != sentence.verb.Id) {
+        if (verb != sentence.verb.Id) {
             return new InteractionFaliure(sentence.verb.Copy());
         }
         interactFunc(thing);

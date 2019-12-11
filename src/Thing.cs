@@ -6,17 +6,17 @@ abstract public class Thing : TexterObject
     /// <summary>
     /// The noun that describes this thing.
     /// </summary>
-    public Token noun;
+    public string noun;
 
     /// <summary>
     /// The prepositions that describes this thing.
     /// </summary>
-    public Token[] prepositions;
+    public string[] prepositions;
 
     /// <summary>
     /// The adjectives that describes this thing.
     /// </summary>
-    public Token[] adjectives;
+    public string[] adjectives;
 
     /// <summary>
     /// Construct a new thing.
@@ -25,7 +25,7 @@ abstract public class Thing : TexterObject
     /// <param name="noun">The noun describing this object.</param>
     /// <param name="prepositions">The prepositions describing this object.</param>
     /// <param name="adjectives">The adjectives describing this object.</param>
-    public Thing(string id, Token noun, Token[] prepositions, Token[] adjectives)
+    public Thing(string id, string noun, string[] prepositions, string[] adjectives)
     {
         this.Id = id;
         this.noun = noun;
@@ -38,12 +38,12 @@ abstract public class Thing : TexterObject
     /// </summary>
     /// <param name="id">The indentifier of the object.</param>
     /// <param name="noun">The noun describing this object.</param>
-    public Thing(string id, Token noun)
+    public Thing(string id, string noun)
     {
         this.Id = id;
         this.noun = noun;
-        this.prepositions = new Token[] {};
-        this.adjectives = new Token[] {};
+        this.prepositions = new string[] {};
+        this.adjectives = new string[] {};
     }
 }
 
