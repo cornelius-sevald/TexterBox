@@ -1,12 +1,26 @@
+
+/// <summary>
+/// The action thing allows for sentences without a noun.
+/// <para>
+/// For example, sentences like "wait" can be valid.
+/// </para>
+/// </summary>
 public sealed class ActionThing : Thing
 {
     private static ActionThing instance = null;
     private static readonly object mutextLock = new object();
 
+    /// <summary>
+    /// Reference to the player.
+    /// </summary>
     public Player player = null;
 
+    /// <summary>
+    /// Construct a new singleton action thing.
+    /// </summary>
     public ActionThing()
      : base("action", "", new string[] {}, new string[] {}) {}
+
     
     /// <summary>
     /// Get the singleton instance of the action thing.
