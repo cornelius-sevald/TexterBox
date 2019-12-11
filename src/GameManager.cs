@@ -18,6 +18,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
     private Token[] validTokens;
     private List<Thing> things;
     private List<Interaction> interactions;
+    public Player player;
 
     private int timeLeft;
 
@@ -44,7 +45,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
         ActionThing action = ActionThing.Instance;
 
-        Player player = new Player(
+        player = new Player(
             "spiller",
             new string[] { },
             new string[] { }
@@ -164,6 +165,13 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         for (int i = 0; i < interactions.Count; i++)
         {
             Interaction interaction = interactions[i];
+
+            if (!things.Contains(interaction.thing))
+            {
+                Output.WriteMessageLn("Du ser ingen " + interaction.thing.noun);
+                return;
+            }
+            
             InteractionMatch match = interaction.Match(sentence);
 
             if (match is InteractionSucess)
