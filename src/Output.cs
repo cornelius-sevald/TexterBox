@@ -11,7 +11,7 @@ public static class Output
     /// The delay between each character is printed to the console.
     /// Measured in milliseconds.
     /// </summary>
-    public static int printDelay = 50;
+    public static int printDelay = 35;
 
     /// <summary>
     /// Write some text to the console, with some delay.
