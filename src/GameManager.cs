@@ -23,6 +23,10 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
     public int timeLeft;
 
+    private bool hungry = false;
+
+    private bool veryHungry = false;
+
     /// <summary>
     /// Construct a new player with an identifying noun,
     /// prepositions and adjectives.
@@ -143,6 +147,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             new Interaction(action, "vent", this.Wait),
             new Interaction(action, "owo", this.Smite),
             new Interaction(action, "shit", this.Shit),
+            new Interaction(action, "se", this.Look),
             // Program interactions:
             new Interaction(this, "luk",  player.CloseThing),
             new Interaction(this, "stop", player.StopThing),
@@ -235,6 +240,26 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
                     AddDog();
                 }
             }
+            if (timeLeft <= 60)
+            {
+                if (hungry == false)
+                {
+                    Output.WriteMessage("Du føler dig noget sulten, ");
+                    Thread.Sleep(400);
+                    Output.WriteMessageLn("du burde nok finde noget at spise snart.");
+                }
+                hungry = true;
+            }
+            if (timeLeft <= 30)
+            {
+                if (veryHungry == false)
+                {
+                    Output.WriteMessage("Din mave rumler med lyden af tomhed, ");
+                    Thread.Sleep(400);
+                    Output.WriteMessageLn("du føler du kommer til at dø snart hvis du ikke får noget at spise.");
+                }
+                hungry = true;
+            }
             string input = Input.GetInput();
             if (input == null)
             {
@@ -318,12 +343,29 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
     /// <param name="thing">The object that caused the waiting.</param>
     public void Wait(Thing thing)
     {
-        timeLeft -= 35;
+        timeLeft -= 25;
     }
 
     public void Smite(Thing thing)
     {
         GameManager.Instance.Lose("Fuck dig Klaus");
+    }
+
+    public void Look(Thing thing){
+        Output.WriteMessage("Du ser ");
+        foreach (Thing lookThing in things)
+        {
+           switch(lookThing.Id) {
+                case "action":
+                case "player":
+                case "spil":
+                    break;
+                default:
+                Output.WriteMessage(lookThing.Id + ", ");
+                break;
+           }
+        }
+        Output.WriteMessageLn(" ");
     }
 
     public void Shit(Thing thing)
