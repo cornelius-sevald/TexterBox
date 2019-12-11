@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -8,7 +9,7 @@ using System.Text.RegularExpressions;
 /// </summary>
 public enum TokenType
 {
-    NoneToken, VerbToken, PrepositionToken, AdjectiveToken, NounToken
+    NoneToken, NounToken, VerbToken, AdjectiveToken, PrepositionToken
 }
 
 /// <summary>

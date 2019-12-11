@@ -1,15 +1,10 @@
+using System;
 using System.Linq;
-
-/// <summary>
-/// Delegate to do some interaction on some thing.
-/// </summary>
-/// <param name="thing">The ting to interact with.</param>
-public delegate void DoInteraction(Thing thing);
 
 /// <summary>
 /// Class representing an interaction between an action and a thing.
 /// </summary>
-public class Interaction : TexterObject
+public class Interaction
 {
     /// <summary>
     /// The thing this interation will act upon.
@@ -24,17 +19,15 @@ public class Interaction : TexterObject
     /// <summary>
     /// The action that will happen if the interaction matches.
     /// </summary>
-    public DoInteraction interactFunc;
+    public Action<Thing> interactFunc;
 
     /// <summary>
     /// Construct a new interaction.
     /// </summary>
-    /// <param name="id">The identifier of the interaction.</param>
     /// <param name="thing">The thing to interact with.</param>
     /// <param name="verb">The trigger of the interaction.</param>
     /// <param name="interactFunc">The action of the interaction.</param>
-    public Interaction(string id, Thing thing, Token verb, DoInteraction interactFunc) {
-        this.Id = id;
+    public Interaction(Thing thing, Token verb, Action<Thing> interactFunc) {
         this.thing = thing;
         this.verb = verb;
         this.interactFunc = interactFunc;
@@ -56,13 +49,13 @@ public class Interaction : TexterObject
         }
         foreach (Token prep in sentence.prepositions)
         {
-            if (!thing.prepositions.Contains(prep)) {
+            if (!thing.prepositions.Any(t => t.Id == prep.Id)) {
                 return new InteractionFaliure(prep.Copy());
             }
         }
         foreach (Token adj in sentence.adjectives)
         {
-            if (!thing.adjectives.Contains(adj)) {
+            if (!thing.adjectives.Any(t => t.Id == adj.Id)) {
                 return new InteractionFaliure(adj.Copy());
             }
         }

@@ -1,7 +1,7 @@
 /// <summary>
 /// Class representing a thing in the game.
 /// </summary>
-public class Thing : TexterObject
+abstract public class Thing : TexterObject
 {
     /// <summary>
     /// The noun that describes this thing.
@@ -45,16 +45,74 @@ public class Thing : TexterObject
         this.prepositions = new Token[] {};
         this.adjectives = new Token[] {};
     }
+}
+
+/// <summary>
+/// Thing that can be thrown.
+/// <para>
+/// This is only meant to be implemented by the <c>Thing</c> class.
+/// </para>
+/// </summary>
+public interface IThrowable {
 
     /// <summary>
-    /// Construct a thing with the same noun and identifier.
+    /// Trow the thing.
     /// </summary>
-    /// <param name="noun">The noun and identifier string of this thing.</param>
-    public Thing(Token noun)
-    {
-        this.Id = noun.Id;
-        this.noun = noun;
-        this.prepositions = new Token[] {};
-        this.adjectives = new Token[] {};
-    }
+    void Throw();
+}
+
+/// <summary>
+/// Thing that can be eaten.
+/// <para>
+/// This is only meant to be implemented by the <c>Thing</c> class.
+/// </para>
+/// </summary>
+public interface IEdible {
+
+    /// <summary>
+    /// Eat the thing.
+    /// </summary>
+    void Eat();
+}
+
+/// <summary>
+/// Thing that can be opened.
+/// <para>
+/// This is only meant to be implemented by the <c>Thing</c> class.
+/// </para>
+/// </summary>
+public interface IOpenable {
+
+    /// <summary>
+    /// Open the thing.
+    /// </summary>
+    void Open();
+}
+
+/// <summary>
+/// Thing that can be closed.
+/// <para>
+/// This is only meant to be implemented by the <c>Thing</c> class.
+/// </para>
+/// </summary>
+public interface ICloseable {
+
+    /// <summary>
+    /// Close the thing.
+    /// </summary>
+    void Close();
+}
+
+/// <summary>
+/// Thing that can be stopped.
+/// <para>
+/// This is only meant to be implemented by the <c>Thing</c> class.
+/// </para>
+/// </summary>
+public interface IStoppable {
+
+    /// <summary>
+    /// Stop the thing.
+    /// </summary>
+    void Stop();
 }
