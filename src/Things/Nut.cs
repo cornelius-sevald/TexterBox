@@ -66,7 +66,7 @@ public class Nut : Thing, IThrowable, IEdible, IOpenable, IPunchable, ICollectab
         {
             this.eaten = true;
             Output.WriteMessageLn("Du spiser nøden; den smager meget godt.");
-            GameManager.Instance.Win("Med den kolde nød i din hals, vandt du videospillet D-)...");
+            GameManager.Instance.Win("Med den kolde nød i din hals, vandt du videospillet B-)...");
         }
     }
 
