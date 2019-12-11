@@ -79,7 +79,11 @@ public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable
     /// </summary>
     public void Open()
     {
-        if (open)
+        if (thrown)
+        {
+            Output.WriteMessageLn("Du holder ikke nogen ketchup");
+        } 
+        else if (open)
         {
             Output.WriteMessageLn("Ketchuppen er allerede åben.");
         }
