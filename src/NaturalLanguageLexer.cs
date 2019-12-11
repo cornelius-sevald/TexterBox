@@ -147,55 +147,62 @@ public static class TokenUtils
     public static Token[] FromFile(string filePath)
     {
         List<Token> tokens = new List<Token>();
-        using (StreamReader sr = File.OpenText(filePath))
+        try
         {
-            string s;
-            TokenType currentType = TokenType.NoneToken;
-            while ((s = sr.ReadLine()) != null)
+            using (StreamReader sr = File.OpenText(filePath))
             {
-                switch (s)
+                string s;
+                TokenType currentType = TokenType.NoneToken;
+                while ((s = sr.ReadLine()) != null)
                 {
-                    case "":
-                        break;
-                    case "Verbs":
-                        currentType = TokenType.VerbToken;
-                        break;
-                    case "Nouns":
-                        currentType = TokenType.NounToken;
-                        break;
-                    case "Adjectives":
-                        currentType = TokenType.AdjectiveToken;
-                        break;
-                    case "Prepositions":
-                        currentType = TokenType.PrepositionToken;
-                        break;
-                    default:
-                        if (currentType == TokenType.NoneToken)
-                        {
-                            // If no active token is specified, throw an exception.
-                            throw new TokenReadException("No active token type.");
-                        }
-                        if (!(s.StartsWith('\t') || s.StartsWith("    ")))
-                        {
-                            // If the string is not indendet, throw an exception.
-                            throw new TokenReadException("Invalid token syntax.");
-                        }
-                        // Split the string at the first " : ".
-                        string[] _delimiters = { ": " };
-                        string[] _parts = s.Split(_delimiters, 2, System.StringSplitOptions.None);
-                        if (_parts.Length != 2)
-                        {
-                            // If the string did not split in two, throw an exception.
-                            throw new TokenReadException("Invalid token syntax.");
-                        }
-                        string id = _parts[0].Trim();
-                        string rxStr = _parts[1];
+                    switch (s)
+                    {
+                        case "":
+                            break;
+                        case "Verbs":
+                            currentType = TokenType.VerbToken;
+                            break;
+                        case "Nouns":
+                            currentType = TokenType.NounToken;
+                            break;
+                        case "Adjectives":
+                            currentType = TokenType.AdjectiveToken;
+                            break;
+                        case "Prepositions":
+                            currentType = TokenType.PrepositionToken;
+                            break;
+                        default:
+                            if (currentType == TokenType.NoneToken)
+                            {
+                                // If no active token is specified, throw an exception.
+                                throw new TokenReadException("No active token type.");
+                            }
+                            if (!(s.StartsWith('\t') || s.StartsWith("    ")))
+                            {
+                                // If the string is not indendet, throw an exception.
+                                throw new TokenReadException("Invalid token syntax.");
+                            }
+                            // Split the string at the first " : ".
+                            string[] _delimiters = { ": " };
+                            string[] _parts = s.Split(_delimiters, 2, System.StringSplitOptions.None);
+                            if (_parts.Length != 2)
+                            {
+                                // If the string did not split in two, throw an exception.
+                                throw new TokenReadException("Invalid token syntax.");
+                            }
+                            string id = _parts[0].Trim();
+                            string rxStr = _parts[1];
 
-                        Token token = new Token(currentType, id, rxStr);
-                        tokens.Add(token);
-                        break;
+                            Token token = new Token(currentType, id, rxStr);
+                            tokens.Add(token);
+                            break;
+                    }
                 }
             }
+        }
+        catch (IOException)
+        {
+            throw new TokenReadException("Could not read file " + Path.GetFullPath(filePath));
         }
         return tokens.ToArray();
     }

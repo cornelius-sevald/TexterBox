@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 {
     private static GameManager instance = null;
     private static readonly object mutextLock = new object();
-    private static readonly string tokenFilePath = "src/Tokens/tokens.tkn";
+    private static readonly string tokenFilePath = Path.Combine("Resources", "tokens.tkn");
     private static readonly string id = "spil";
 
     private GameState state;
