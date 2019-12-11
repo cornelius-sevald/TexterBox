@@ -16,7 +16,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
     private GameState state;
     private Token[] validTokens;
-    private List<Thing> things;
+    public List<Thing> things;
     private List<Interaction> interactions;
     public Player player;
 
@@ -61,15 +61,35 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             }
         );
 
+        Nut nut = new Nut(
+            "nød",
+            new string[] { },
+            new string[] {
+                "brun",
+                "kold"
+            }
+        );
+
+        Tree tree = new Tree(
+            "træ",
+            new string[] { },
+            new string[] {
+                "brunt",
+                "koldt"
+            },
+            nut
+        );
+
         action.player = player;
 
-        things = new List<Thing> { this, action, player, ketchup };
+        things = new List<Thing> { this, action, player, ketchup, tree};
 
         /* The interactions in the game: */
 
         interactions = new List<Interaction> {
             // Actions
             new Interaction(action, "vent", this.Wait),
+            new Interaction(action, "owo", this.Smite),
             // Program interactions:
             new Interaction(this, "luk",  player.CloseThing),
             new Interaction(this, "stop", player.StopThing),
@@ -78,7 +98,17 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             new Interaction(ketchup, "spis", player.EatThing),
             new Interaction(ketchup, "åben", player.OpenThing),
             new Interaction(ketchup, "luk",  player.CloseThing),
-            new Interaction(ketchup, "hent", player.CollectThing)
+            new Interaction(ketchup, "hent", player.CollectThing),
+            // Tree interactions:
+            new Interaction(tree, "spis", player.EatThing),
+            new Interaction(tree, "åben", player.OpenThing),
+            new Interaction(tree, "slå", player.PunchThing),
+            // Nut interactions:
+            new Interaction(nut, "spis", player.EatThing),
+            new Interaction(nut, "åben", player.OpenThing),
+            new Interaction(nut, "slå", player.PunchThing),
+            new Interaction(nut, "hent", player.CollectThing),
+            new Interaction(nut, "kast", player.ThrowThing)
         };
     }
 
@@ -125,7 +155,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         {
             if (--timeLeft <= 0)
             {
-                Loose("Du ventede i for lang tid, og døde af sult.");
+                Lose("Du ventede i for lang tid, og døde af sult.");
                 break;
             }
             if (timeLeft <= 80)
@@ -221,6 +251,11 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         timeLeft -= 35;
     }
 
+    public void Smite(Thing thing)
+    {
+        GameManager.Instance.Lose("Fuck dig klaus");
+    }
+
     /// <summary>
     /// Win the game.
     /// </summary>
@@ -236,16 +271,16 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
 
     /// <summary>
-    /// Loose the game.
+    /// Lose the game.
     /// </summary>
-    /// <param name="looseMessage">The message to display to the player.</param>
-    public void Loose(string looseMessage)
+    /// <param name="loseMessage">The message to display to the player.</param>
+    public void Lose(string loseMessage)
     {
         state = GameState.GameLost;
 
         Thread.Sleep(3000);
         Console.Clear();
-        Output.WriteMessageLn(looseMessage);
+        Output.WriteMessageLn(loseMessage);
     }
 
     /// <summary>
