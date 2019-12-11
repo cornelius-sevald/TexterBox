@@ -116,3 +116,17 @@ public interface IStoppable {
     /// </summary>
     void Stop();
 }
+
+/// <summary>
+/// Thing that can be punched.
+/// <para>
+/// This is only meant to be implemented by the <c>Thing</c> class.
+/// </para>
+/// </summary>
+public interface IPunchable {
+
+    /// <summary>
+    /// Punch the thing.
+    /// </summary>
+    void Punch();
+}

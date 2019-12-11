@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Collections.Generic;
 
@@ -15,8 +16,8 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
     private GameState state;
     private Token[] validTokens;
-    private Thing[] things;
-    private Interaction[] interactions;
+    private List<Thing> things;
+    private List<Interaction> interactions;
 
     private int timeLeft;
 
@@ -61,11 +62,11 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
         action.player = player;
 
-        things = new Thing[] { this, action, player, ketchup };
+        things = new List<Thing> { this, action, player, ketchup };
 
         /* The interactions in the game: */
 
-        interactions = new Interaction[] {
+        interactions = new List<Interaction> {
             // Actions
             new Interaction(action, "vent", this.Wait),
             // Program interactions:
@@ -80,6 +81,40 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
     }
 
     /// <summary>
+    /// Add a dog to the list of things
+    /// as well as some interactions.
+    /// </summary>
+    void AddDog()
+    {
+        Player player = things.Find(t => t.Id == "player") as Player;
+
+        Dog dog = new Dog(
+            "hund",
+            new string[] { },
+            new string[] { "wholesome", "irriterende" }
+        );
+
+        things.Add(dog);
+
+        interactions.Add(
+            new Interaction(
+                dog,
+                "slå",
+                player.PunchThing
+            )
+        );
+        interactions.Add(
+            new Interaction(
+                dog,
+                "spis",
+                player.EatThing
+            )
+        );
+
+        Output.WriteMessageLn("Du ser en irriterende hund der følger efter dig.");
+    }
+
+    /// <summary>
     /// The main loop of the game.
     /// </summary>
     public void GameLoop()
@@ -90,6 +125,13 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             {
                 Loose("Du ventede i for lang tid, og døde af sult.");
                 break;
+            }
+            if (timeLeft <= 80)
+            {
+                if (!things.Any(t => t.Id == "hund"))
+                {
+                    AddDog();
+                }
             }
             string input = Input.GetInput();
             if (input == null)
@@ -117,8 +159,8 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
     /// <param name="sentence">The sentence to act on.</param>
     public void DoSentence(Sentence sentence)
     {
-        InteractionFaliure[] faliures = new InteractionFaliure[interactions.Length];
-        for (int i = 0; i < interactions.Length; i++)
+        InteractionFaliure[] faliures = new InteractionFaliure[interactions.Count];
+        for (int i = 0; i < interactions.Count; i++)
         {
             Interaction interaction = interactions[i];
             InteractionMatch match = interaction.Match(sentence);

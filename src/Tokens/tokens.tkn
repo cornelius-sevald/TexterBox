@@ -3,6 +3,7 @@ Nouns
     spiller : spiller(en)?|mig|selv
     skovl : skovl(en)?
     spil : spil(let)?|program(met)?
+    hund : hund(en)?|doggo(en)?|pupper
 
 Adjectives
     rød : rød(e)?
@@ -10,6 +11,8 @@ Adjectives
     god : god(e)?
     kold : kold(e)?
     varm : varm(e)?
+    wholesome : wholesome
+    irriterende : irriterende
 
 Verbs
     spis : spis|drik|slug|fort(er|ær|nite)|indtag|æd|haps
@@ -17,6 +20,7 @@ Verbs
     åben : åben
     luk : luk
     stop : stop
+    slå : slå|angrib|spark
     brug : brug|andvend
     se : se
     vent : vent

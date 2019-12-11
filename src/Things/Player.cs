@@ -77,4 +77,17 @@ public class Player : Thing
             t.Stop();
         }
     }
+
+
+    /// <summary>
+    /// Punch something, if punchable.
+    /// </summary>
+    /// <param name="thing">Thing to punch.</param>
+    public void PunchThing(Thing thing)
+    {
+        if (thing is IPunchable t)
+        {
+            t.Punch();
+        }
+    }
 }
