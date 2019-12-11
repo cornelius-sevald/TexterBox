@@ -6,7 +6,7 @@
 /// </summary>
 public class Tree : Thing, IEdible, IOpenable, IPunchable
 {
-    static private string id = "Tree";
+    static private string id = "træ";
 
     Nut nut;
 

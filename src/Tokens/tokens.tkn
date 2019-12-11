@@ -17,7 +17,7 @@ Adjectives
     kold : kold((e)?|(t)?)
     varm : varm(e)?
     wholesome : wholesome|blød(e)?
-    irriterende : irriterende
+    irriterende : irriterende|cringe
 
 Verbs
     spis : spis|drik|slug|fort(er|ær|nite)|indtag|æd|haps
@@ -31,4 +31,4 @@ Verbs
     hent : hent|tag|saml
     vent : vent
     owo : owo|uwu
-    shit : shit|skid|shart|poob|prut
+    shit : shit|skid|shart|poob|prut|shid|fard
