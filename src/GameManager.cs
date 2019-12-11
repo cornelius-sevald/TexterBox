@@ -198,8 +198,8 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
             if (!things.Contains(interaction.thing))
             {
-                Output.WriteMessageLn("Du ser ingen " + interaction.thing.noun);
-                return;
+                faliures[i] = new InteractionFaliure(new Token(TokenType.NounToken, interaction.thing.noun));
+                continue;
             }
             
             InteractionMatch match = interaction.Match(sentence);
