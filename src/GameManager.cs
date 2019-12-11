@@ -53,6 +53,16 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             new string[] { }
         );
 
+        Pants pants = new Pants(
+            "bukser",
+            new string[] { },
+            new string[] { 
+                "orange",
+                "god",
+                "wholesome" 
+            }
+        );
+
         Ketchup ketchup = new Ketchup(
             "ketchup",
             new string[] { },
@@ -72,12 +82,12 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             }
         );
 
-        Tree tree = new Tree(
+         Tree tree = new Tree(
             "træ",
             new string[] { },
             new string[] {
-                "brunt",
-                "koldt"
+                "brun",
+                "kold"
             },
             nut
         );
@@ -106,7 +116,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         Location home = new Location("dit hjem", "hjem", new List<Thing> {});
 
 
-        things = new List<Thing> { this, action, player, ketchup, start, supermarket, home};
+        things = new List<Thing> { this, action, player, ketchup, pants, start, supermarket, home};
 
         /* The interactions in the game: */
 
@@ -114,6 +124,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             // Actions
             new Interaction(action, "vent", this.Wait),
             new Interaction(action, "owo", this.Smite),
+            new Interaction(action, "shit", this.Shit),
             // Program interactions:
             new Interaction(this, "luk",  player.CloseThing),
             new Interaction(this, "stop", player.StopThing),
@@ -144,10 +155,10 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             new Interaction(road, "gå", player.CrossThing),
             // Food interactions
             new Interaction(food, "spis", player.EatThing),
-            new Interaction(food, "hent", player.CollectThing)
-            {
-                
-            }
+            new Interaction(food, "hent", player.CollectThing),
+            // Pants interactions
+            new Interaction(pants, "spis", player.EatThing),
+            new Interaction(pants, "kast", player.ThrowThing)
         };
 
     }
@@ -302,7 +313,19 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
     public void Smite(Thing thing)
     {
-        GameManager.Instance.Lose("Fuck dig klaus");
+        GameManager.Instance.Lose("Fuck dig Klaus");
+    }
+
+    public void Shit(Thing thing)
+    {
+        if (GameManager.Instance.player.pants == true)
+        {
+            Output.WriteMessageLn("Du skider");
+            GameManager.Instance.Lose("Med en umådelig kraft ryger lorten ud før du opdager at du ikke har taget dine bukser af, det er dog allerede for sent, der opstår en brun plet ved din bagside og dit syn falmer...");
+        } else {
+            Output.WriteMessageLn("Du skider på jorden");
+            GameManager.Instance.Win("Du ved ikke hvorfor, men med lorten på vejen fylder det dig med en vis tilfredsstilelse, du mærker ikke sulten mere...");
+        }
     }
 
     /// <summary>
@@ -330,6 +353,9 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         Thread.Sleep(3000);
         Console.Clear();
         Output.WriteMessageLn(loseMessage);
+        Thread.Sleep(1000);
+        Output.WriteMessageLn("Du har tabt videospillet.");
+        System.Console.ReadKey();
     }
 
     /// <summary>
