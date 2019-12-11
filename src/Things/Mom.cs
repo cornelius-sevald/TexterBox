@@ -14,4 +14,12 @@ public class Mom : Thing
     /// </summary>
     public Mom(string noun)
      : base(id, noun) { }
+
+    /// <summary>
+    /// Send the player to the shadow realm.
+    /// </summary>
+    public void Send(Thing thing)
+    {
+        GameManager.Instance.Lose("Mor sender dig til skyggeverdenen.\nDu er allerede død.");
+    }
 }

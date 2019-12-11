@@ -115,7 +115,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         );
 
         Mom mom = new Mom(
-            "mom"
+            "mor"
         );
 
         Location legeplads = new Location(
@@ -155,6 +155,8 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             new Interaction(legeplads, "gå", player.GoToLocation),
             new Interaction(supermarket, "gå", player.GoToLocation),
             new Interaction(home, "gå", player.GoToLocation),
+            // Mom interactions
+            new Interaction(mom, "slå", mom.Send),
             // Ketchup interactions:
             new Interaction(ketchup, "kast", player.ThrowThing),
             new Interaction(ketchup, "spis", player.EatThing),
@@ -352,9 +354,13 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         timeLeft -= 25;
     }
 
+    /// <summary>
+    /// Smite klaus.
+    /// </summary>
+    /// <param name="thing"></param>
     public void Smite(Thing thing)
     {
-        GameManager.Instance.Lose("Fuck dig Klaus");
+        Lose("Fuck dig Klaus");
     }
 
     public void Look(Thing thing)
