@@ -94,6 +94,10 @@ public class Nut : Thing, IThrowable, IEdible, IOpenable, IPunchable, ICollectab
         {
             Output.WriteMessageLn("Du kan ikke bruge en ødelagt nød til noget");
         }
+        else if (collected)
+        {
+            Output.WriteMessageLn("Du har allerede nødden");
+        }
         else 
         {
             Output.WriteMessageLn("Du samler nøden op");
