@@ -2,11 +2,13 @@
 using System.Linq;
 using System;
 
-class Program
-{
-    static void Main(string[] args)
+namespace TexterBox{
+    class Program
     {
-        GameManager game = GameManager.Instance;
-        game.GameLoop();
+       static void Main(string[] args)
+       {
+           GameManager game = GameManager.Instance;
+           game.GameLoop();
+       }
     }
 }
