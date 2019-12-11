@@ -27,13 +27,13 @@ public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable
     /// Construct a ketchup object with an identifying noun,
     /// prepositions and adjectives.
     /// </summary>
-    public Ketchup(Token noun, Token[] prepositions, Token[] adjectives)
+    public Ketchup(string noun, string[] prepositions, string[] adjectives)
      : base(id, noun, prepositions, adjectives) { }
 
     /// <summary>
     /// Construct a ketchup object with an identifying noun.
     /// </summary>
-    public Ketchup(Token noun)
+    public Ketchup(string noun)
      : base(id, noun) { }
 
     /// <summary>
