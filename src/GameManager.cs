@@ -227,7 +227,18 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
     /// </summary>
     public void GameLoop()
     {
+        Output.WriteMessage("Du er på vej tilbage fra Ben’s hus da du pludselig føler en stærk sult I maven, ");
+        Thread.Sleep(400);
+        Output.WriteMessage("du er klar over hvad det her betyder, ");
+        Thread.Sleep(400);
+        Output.WriteMessageLn("der er noget der skal spises snart.");
+        Output.WriteMessageLn(" ");
+        Thread.Sleep(800);
+
         (things.Find(t => t.Id == "legeplads") as Location).Arrive(player);
+        Thread.Sleep(400);
+        Output.WriteMessageLn("Du burde se dig omkring.");
+
         while (state == GameState.GameGaming)
         {
             if (--timeLeft <= 0)
@@ -260,7 +271,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
                     Thread.Sleep(400);
                     Output.WriteMessageLn("du føler du kommer til at dø snart hvis du ikke får noget at spise.");
                 }
-                hungry = true;
+                veryHungry = true;
             }
 
             // Parse input.
@@ -416,6 +427,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         Thread.Sleep(3000);
         Console.Clear();
         Output.WriteMessageLn(winMessage);
+        System.Console.ReadKey();
     }
 
 

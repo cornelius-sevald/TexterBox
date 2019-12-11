@@ -46,7 +46,7 @@ public class Location : Thing
             Output.WriteMessageLn("Du er allerede ved " + name);
             return;
         }
-        Output.WriteMessageLn("Du går til " + name);
+        Output.WriteMessageLn("Du ankommer ved " + name + ".");
         player.location = this;
         foreach (Thing thing in things)
         {
