@@ -260,12 +260,18 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
                 }
                 hungry = true;
             }
+
+            // Parse input.
             string input = Input.GetInput();
+            if (input == "") {
+                continue;
+            }
             if (input == null)
             {
                 state = GameState.GameLost;
                 break;
             }
+
             Token[] tokenized = Lexer.LexInput(validTokens, input);
             Sentence sentence = Sentence.EmptySentence();
             if (!Parser.ParseTokens(tokenized, ref sentence))
