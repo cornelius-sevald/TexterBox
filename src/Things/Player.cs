@@ -6,6 +6,16 @@ public class Player : Thing
     static private string id = "player";
 
     /// <summary>
+    /// Is the player wearing pants?
+    /// </summary>
+    public bool pants = true;
+
+    /// <summary>
+    /// Has the player shit yet?
+    /// </summary>
+    public bool shid = false;
+
+    /// <summary>
     /// Construct a new player with an identifying noun,
     /// prepositions and adjectives.
     /// </summary>

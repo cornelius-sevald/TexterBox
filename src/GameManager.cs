@@ -18,8 +18,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
     private Token[] validTokens;
     public List<Thing> things;
     private List<Interaction> interactions;
-    public Player player;
-
+    public Player player = null;
     private int timeLeft;
 
     /// <summary>
@@ -51,6 +50,16 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             new string[] { }
         );
 
+        Pants pants = new Pants(
+            "bukser",
+            new string[] { },
+            new string[] { 
+                "orange",
+                "god",
+                "wholesome" 
+            }
+        );
+
         Ketchup ketchup = new Ketchup(
             "ketchup",
             new string[] { },
@@ -70,19 +79,19 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             }
         );
 
-        Tree tree = new Tree(
+         Tree tree = new Tree(
             "træ",
             new string[] { },
             new string[] {
-                "brunt",
-                "koldt"
+                "brun",
+                "kold"
             },
             nut
         );
 
         action.player = player;
 
-        things = new List<Thing> { this, action, player, ketchup, tree};
+        things = new List<Thing> { this, action, player, ketchup, tree, pants};
 
         /* The interactions in the game: */
 
@@ -90,6 +99,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             // Actions
             new Interaction(action, "vent", this.Wait),
             new Interaction(action, "owo", this.Smite),
+            new Interaction(action, "shit", this.Shit),
             // Program interactions:
             new Interaction(this, "luk",  player.CloseThing),
             new Interaction(this, "stop", player.StopThing),
@@ -103,12 +113,9 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             new Interaction(tree, "spis", player.EatThing),
             new Interaction(tree, "åben", player.OpenThing),
             new Interaction(tree, "slå", player.PunchThing),
-            // Nut interactions:
-            new Interaction(nut, "spis", player.EatThing),
-            new Interaction(nut, "åben", player.OpenThing),
-            new Interaction(nut, "slå", player.PunchThing),
-            new Interaction(nut, "hent", player.CollectThing),
-            new Interaction(nut, "kast", player.ThrowThing)
+            // Pants interactions
+            new Interaction(pants, "spis", player.EatThing),
+            new Interaction(pants, "kast", player.ThrowThing)
         };
     }
 
@@ -118,8 +125,6 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
     /// </summary>
     void AddDog()
     {
-        Player player = things.Find(t => t.Id == "player") as Player;
-
         Dog dog = new Dog(
             "hund",
             new string[] { },
@@ -253,7 +258,19 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
     public void Smite(Thing thing)
     {
-        GameManager.Instance.Lose("Fuck dig klaus");
+        GameManager.Instance.Lose("Fuck dig Klaus");
+    }
+
+    public void Shit(Thing thing)
+    {
+        if (GameManager.Instance.player.pants == true)
+        {
+            Output.WriteMessageLn("Du skider");
+            GameManager.Instance.Lose("Med en umådelig kraft ryger lorten ud før du opdager at du ikke har taget dine bukser af, det er dog allerede for sent, der opstår en brun plet ved din bagside og dit syn falmer...");
+        } else {
+            Output.WriteMessageLn("Du skider på jorden");
+            GameManager.Instance.Win("Du ved ikke hvorfor, men med lorten på vejen fylder det dig med en vis tilfredsstilelse, du mærker ikke sulten mere...");
+        }
     }
 
     /// <summary>
@@ -281,6 +298,9 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         Thread.Sleep(3000);
         Console.Clear();
         Output.WriteMessageLn(loseMessage);
+        Thread.Sleep(1000);
+        Output.WriteMessageLn("Du har tabt videospillet.");
+        System.Console.ReadKey();
     }
 
     /// <summary>

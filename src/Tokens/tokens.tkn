@@ -6,25 +6,29 @@ Nouns
     hund : hund(en)?|doggo(en)?|pupper
     træ : træ(et)?
     nød : nød(den)?
+    bukser : bukser(ne)?|pant(s)?|jort(s)?
 
 Adjectives
     rød : rød(e)?
     blå : blå
-    god : god(e)?
-    kold : kold(e)?
+    orange : orange
+    brun : brun(t)?
+    god : god(e)?|epic
+    kold : kold((e)?|(t)?)
     varm : varm(e)?
-    wholesome : wholesome
+    wholesome : wholesome|blød(e)?
     irriterende : irriterende
 
 Verbs
     spis : spis|drik|slug|fort(er|ær|nite)|indtag|æd|haps
-    kast : kast
+    kast : kast|smid|fjern|rid
     åben : åben
     luk : luk
     stop : stop
     slå : slå|angrib|spark
     brug : brug|andvend
-    se : se
+    se : se|kig|observer
     hent : hent|tag|saml
     vent : vent
-    owo : owo
+    owo : owo|uwu
+    shit : shit|skid|shart|poob|prut

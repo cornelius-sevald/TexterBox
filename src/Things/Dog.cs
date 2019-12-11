@@ -9,7 +9,7 @@ public class Dog : Thing, IEdible, IPunchable
     public bool alive = true;
 
     /// <summary>
-    /// Has the dig been eaten?
+    /// Has the dog been eaten?
     /// </summary>
     public bool eaten = false;
 
