@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class Location : Thing
 {
 
+    public string name;
     public List<Thing> things = null;
 
     /// <summary>
@@ -15,9 +16,10 @@ public class Location : Thing
     /// <param name="noun">The noun describing this object.</param>
     /// <param name="prepositions">The prepositions describing this object.</param>
     /// <param name="adjectives">The adjectives describing this object.</param>
-    public Location(string id, string noun, string[] prepositions, string[] adjectives, List<Thing> things)
+    public Location(string id, string name, string noun, string[] prepositions, string[] adjectives, List<Thing> things)
      : base(id, noun, prepositions, adjectives)
     {
+        this.name = name;
         this.things = things;
     }
 
@@ -26,9 +28,10 @@ public class Location : Thing
     /// </summary>
     /// <param name="id">The indentifier of the object.</param>
     /// <param name="noun">The noun describing this object.</param>
-    public Location(string id, string noun, List<Thing> things)
+    public Location(string id, string name, string noun, List<Thing> things)
      : base(id, noun)
     {
+        this.name = name;
         this.things = things;
     }
 
@@ -40,14 +43,14 @@ public class Location : Thing
     {
         if (player.location == this)
         {
-            Output.WriteMessageLn("Du er allerede ved " + Id);
+            Output.WriteMessageLn("Du er allerede ved " + name);
             return;
         }
-        Output.WriteMessageLn("Du går til " + Id);
+        Output.WriteMessageLn("Du går til " + name);
         player.location = this;
         foreach (Thing thing in things)
         {
-            GameManager.Instance.AddThing(thing);
+            GameManager.Instance.things.Add(thing);
         }
     }
 
@@ -65,7 +68,7 @@ public class Location : Thing
         player.location = null;
         foreach (Thing thing in things)
         {
-            GameManager.Instance.RemoveThing(thing);
+            GameManager.Instance.things.Remove(thing);
         }
     }
 }

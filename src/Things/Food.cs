@@ -49,6 +49,7 @@ public class Food : Thing, ICollectable, IEdible
         else
         {
             collected = true;
+            GameManager.Instance.player.location.things.Remove(this);
             Output.WriteMessageLn("Du tager maden.");
         }
     }

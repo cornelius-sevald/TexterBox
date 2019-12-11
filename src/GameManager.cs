@@ -16,11 +16,10 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
     private GameState state;
     private Token[] validTokens;
-    private List<Thing> things;
-    private List<Interaction> interactions;
+    public List<Thing> things;
+    public List<Interaction> interactions;
 
     public Player player = null;
-    public Location start = null;
 
     public int timeLeft;
 
@@ -111,12 +110,31 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             road
         );
 
-        start = new Location("en legeplads", "legeplads", new List<Thing> {tree});
-        Location supermarket = new Location("supermarkedet", "supermarket", new List<Thing> {road, car, food});
-        Location home = new Location("dit hjem", "hjem", new List<Thing> {});
+        Mom mom = new Mom(
+            "mom"
+        );
+
+        Location legeplads = new Location(
+            "legeplads",
+            "en legeplads",
+            "legeplads",
+            new List<Thing> {tree}
+        );
+        Location supermarket = new Location(
+            "supermarket",
+            "supermarkedet",
+            "supermarket",
+            new List<Thing> {road, car, food}
+        );
+        Location home = new Location(
+            "hjem",
+            "dit hjem",
+            "hjem",
+            new List<Thing> {mom}
+        );
 
 
-        things = new List<Thing> { this, action, player, ketchup, pants, start, supermarket, home};
+        things = new List<Thing> { this, action, player, ketchup, pants, legeplads, supermarket, home};
 
         /* The interactions in the game: */
 
@@ -129,7 +147,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             new Interaction(this, "luk",  player.CloseThing),
             new Interaction(this, "stop", player.StopThing),
             // Location interactions:
-            new Interaction(start, "gå", player.GoToLocation),
+            new Interaction(legeplads, "gå", player.GoToLocation),
             new Interaction(supermarket, "gå", player.GoToLocation),
             new Interaction(home, "gå", player.GoToLocation),
             // Ketchup interactions:
@@ -138,6 +156,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             new Interaction(ketchup, "åben", player.OpenThing),
             new Interaction(ketchup, "luk",  player.CloseThing),
             new Interaction(ketchup, "hent", player.CollectThing),
+            new Interaction(ketchup, "giv", player.GiveThing),
             // Tree interactions:
             new Interaction(tree, "spis", player.EatThing),
             new Interaction(tree, "åben", player.OpenThing),
@@ -162,16 +181,6 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             new Interaction(pants, "hent", player.CollectThing)
         };
 
-    }
-
-    public void AddThing(Thing thing)
-    {
-        things.Add(thing);
-    }
-
-    public void RemoveThing(Thing thing)
-    {
-        things.Remove(thing);
     }
 
     /// <summary>
@@ -211,7 +220,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
     /// </summary>
     public void GameLoop()
     {
-        start.Arrive(player);
+        (things.Find(t => t.Id == "legeplads") as Location).Arrive(player);
         while (state == GameState.GameGaming)
         {
             if (--timeLeft <= 0)

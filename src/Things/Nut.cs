@@ -47,6 +47,7 @@ public class Nut : Thing, IThrowable, IEdible, IOpenable, IPunchable, ICollectab
         }
         else
         {
+            GameManager.Instance.player.location.things.Add(this);
             this.destroyed = true;
             this.collected = false;
             Output.WriteMessageLn("Du smider nøden på jorden og den går i stykker");
@@ -100,8 +101,9 @@ public class Nut : Thing, IThrowable, IEdible, IOpenable, IPunchable, ICollectab
         }
         else 
         {
-            Output.WriteMessageLn("Du samler nøden op");
             this.collected = true;
+            GameManager.Instance.player.location.things.Remove(this);
+            Output.WriteMessageLn("Du samler nøden op");
         }
     }
 
@@ -116,9 +118,10 @@ public class Nut : Thing, IThrowable, IEdible, IOpenable, IPunchable, ICollectab
         }
         else 
         {
-            Output.WriteMessageLn("Du slår nøden så den går i stykker og kaster den fra dig");
+            GameManager.Instance.player.location.things.Add(this);
             this.destroyed = true;
             this.collected = false;
+            Output.WriteMessageLn("Du slår nøden så den går i stykker og kaster den fra dig");
         }
     }
 }

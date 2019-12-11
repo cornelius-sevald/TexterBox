@@ -182,3 +182,17 @@ public interface ICrossable
     /// </summary>
     void Cross();
 }
+
+/// <summary>
+/// Thing that can be given.
+/// <para>
+/// This is only meant to be implemented by the <c>Thing</c> class.
+/// </para>
+/// </summary>
+public interface IGiveable
+{
+    /// <summary>
+    /// Give a thing.
+    /// </summary>
+    void Give();
+}

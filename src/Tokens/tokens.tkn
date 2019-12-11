@@ -6,13 +6,14 @@ Nouns
     hund : hund(en)?|doggo(en)?|pupper
     træ : træ(et)?
     nød : nød(den)?
-    legeplads : legeplads|start
+    legeplads : legeplads|lejeplads|start
     hjem : hjem(et)?|hjemad
     supermarket : supermarket|supermarkedet
     vej : vej(en)?
     bil : bil(en)?
     mad : mad((en)?|(et)?)
     bukser : bukser(ne)?|pant(s)?|jort(s)?
+    mor : mor
 
 Adjectives
     rød : rød(e)?
@@ -40,3 +41,4 @@ Verbs
     kryds : kryds
     owo : owo|uwu
     shit : shit|skid|shart|poob|prut
+    giv : giv|forær

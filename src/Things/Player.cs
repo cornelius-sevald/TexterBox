@@ -29,11 +29,15 @@ public class Player : Thing
     /// </summary>
     public Player(string noun)
      : base(id, noun) { }
-    
+
     public void GoToLocation(Thing thing)
     {
-        if (thing is Location t) {
-            location.Leave(this);
+        if (thing is Location t)
+        {
+            if (t != location)
+            {
+                location.Leave(this);
+            }
             t.Arrive(this);
         }
     }
@@ -134,11 +138,27 @@ public class Player : Thing
         }
     }
 
+    /// <summary>
+    /// Cross something, if crossable.
+    /// </summary>
+    /// <param name="thing">The thing to cross.</param>
     public void CrossThing(Thing thing)
     {
         if (thing is ICrossable t)
         {
             t.Cross();
+        }
+    }
+
+    /// <summary>
+    /// Give a thing, if givable.
+    /// </summary>
+    /// <param name="thing">The thing to give.</param>
+    public void GiveThing(Thing thing)
+    {
+        if (thing is IGiveable t)
+        {
+            t.Give();
         }
     }
 }

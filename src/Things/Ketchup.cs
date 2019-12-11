@@ -1,10 +1,12 @@
+using System.Linq;
+
 /// <summary>
 /// A ketchup object that the player can interact with.
 /// <para>
 /// Ketchup can be thrown, eaten, opened, closed and collected.
 /// </para>
 /// </summary>
-public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable, ICollectable
+public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable, ICollectable, IGiveable
 {
     static private string id = "ketchup";
 
@@ -29,6 +31,11 @@ public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable, IColle
     public bool wasted = false;
 
     /// <summary>
+    /// Has the ketchup been given?
+    /// </summary>
+    public bool given = false;
+    
+    /// <summary>
     /// Construct a ketchup object with an identifying noun,
     /// prepositions and adjectives.
     /// </summary>
@@ -52,11 +59,14 @@ public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable, IColle
         }
         else if (open)
         {
-            Output.WriteMessageLn("Du smider ketchup-flasken og ketchup flyver ud over det hele");
+            GameManager.Instance.player.location.things.Add(this);
             this.wasted = true;
+            this.thrown = true;
+            Output.WriteMessageLn("Du smider ketchup-flasken og ketchup flyver ud over det hele");
         }
         else
         {
+            GameManager.Instance.player.location.things.Add(this);
             this.thrown = true;
             Output.WriteMessageLn("Du smider ketchuppen.");
         }
@@ -127,8 +137,9 @@ public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable, IColle
     {
         if (thrown)
         {
-            Output.WriteMessageLn("Du samler ketchuppen op");
+            GameManager.Instance.player.location.things.Remove(this);
             this.thrown = false;
+            Output.WriteMessageLn("Du samler ketchuppen op");
         }
         else 
         {
@@ -136,4 +147,29 @@ public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable, IColle
         }
     }
 
+    public void Give()
+    {
+        if (!GameManager.Instance.things.Any(t => t.Id == "mor"))
+        {
+            Output.WriteMessageLn("Der er ikke nogen at give ketchuppen til.");
+        }
+        else if (thrown)
+        {
+            Output.WriteMessageLn("Du har kastet ketchuppen, og kan derfor ikke give den til mor.");
+        }
+        else if (eaten || wasted)
+        {
+            Output.WriteMessageLn("Det ville være meget uhøflihgt at give en tom ketchup flaske til mor.");
+        }
+        else if (open)
+        {
+            Output.WriteMessageLn("Mor vil nok ikke have åben ketchup.");
+        }
+        else
+        {
+            given = true;
+            Output.WriteMessageLn("Du giver ketchuppen til mor, hun bliver meget glad.");
+            GameManager.Instance.Lose("Desværre har du ikke mere ketchup tilbage, så du dør af sult...");
+        }
+    }
 }
