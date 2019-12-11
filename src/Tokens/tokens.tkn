@@ -6,6 +6,12 @@ Nouns
     hund : hund(en)?|doggo(en)?|pupper
     træ : træ(et)?
     nød : nød(den)?
+    legeplads : legeplads|start
+    hjem : hjem(et)?|hjemad
+    supermarket : supermarket|supermarkedet
+    vej : vej(en)?
+    bil : bil(en)?
+    mad : mad((en)?|(et)?)
 
 Adjectives
     rød : rød(e)?
@@ -27,4 +33,6 @@ Verbs
     se : se
     hent : hent|tag|saml
     vent : vent
+    gå : gå|spadser
+    kryds : kryds
     owo : owo

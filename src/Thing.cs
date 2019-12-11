@@ -42,8 +42,8 @@ abstract public class Thing : TexterObject
     {
         this.Id = id;
         this.noun = noun;
-        this.prepositions = new string[] {};
-        this.adjectives = new string[] {};
+        this.prepositions = new string[] { };
+        this.adjectives = new string[] { };
     }
 }
 
@@ -53,7 +53,8 @@ abstract public class Thing : TexterObject
 /// This is only meant to be implemented by the <c>Thing</c> class.
 /// </para>
 /// </summary>
-public interface IThrowable {
+public interface IThrowable
+{
 
     /// <summary>
     /// Trow the thing.
@@ -67,7 +68,8 @@ public interface IThrowable {
 /// This is only meant to be implemented by the <c>Thing</c> class.
 /// </para>
 /// </summary>
-public interface IEdible {
+public interface IEdible
+{
 
     /// <summary>
     /// Eat the thing.
@@ -81,7 +83,8 @@ public interface IEdible {
 /// This is only meant to be implemented by the <c>Thing</c> class.
 /// </para>
 /// </summary>
-public interface IOpenable {
+public interface IOpenable
+{
 
     /// <summary>
     /// Open the thing.
@@ -95,7 +98,8 @@ public interface IOpenable {
 /// This is only meant to be implemented by the <c>Thing</c> class.
 /// </para>
 /// </summary>
-public interface ICloseable {
+public interface ICloseable
+{
 
     /// <summary>
     /// Close the thing.
@@ -109,7 +113,8 @@ public interface ICloseable {
 /// This is only meant to be implemented by the <c>Thing</c> class.
 /// </para>
 /// </summary>
-public interface IStoppable {
+public interface IStoppable
+{
 
     /// <summary>
     /// Stop the thing.
@@ -123,7 +128,8 @@ public interface IStoppable {
 /// This is only meant to be implemented by the <c>Thing</c> class.
 /// </para>
 /// </summary>
-public interface IPunchable {
+public interface IPunchable
+{
 
     /// <summary>
     /// Punch the thing.
@@ -137,10 +143,42 @@ public interface IPunchable {
 /// This is only meant to be implemented by the <c>Thing</c> class.
 /// </para>
 /// </summary>
-public interface ICollectable {
+public interface ICollectable
+{
 
     /// <summary>
     /// Collect the thing.
     /// </summary>
     void Collect();
+}
+
+
+/// <summary>
+/// Thing that can be waited for.
+/// <para>
+/// This is only meant to be implemented by the <c>Thing</c> class.
+/// </para>
+/// </summary>
+public interface IWaitable
+{
+
+    /// <summary>
+    /// Wait for a thing.
+    /// </summary>
+    void Wait();
+}
+
+/// <summary>
+/// Thing that can be crossed.
+/// <para>
+/// This is only meant to be implemented by the <c>Thing</c> class.
+/// </para>
+/// </summary>
+public interface ICrossable
+{
+
+    /// <summary>
+    /// Cross a thing.
+    /// </summary>
+    void Cross();
 }

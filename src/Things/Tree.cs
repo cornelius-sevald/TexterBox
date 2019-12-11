@@ -61,7 +61,7 @@ public class Tree : Thing, IEdible, IOpenable, IPunchable
         {
             Output.WriteMessageLn("Du åbner træet og finder en nød");
             nutSpawn = true;
-            GameManager.Instance.things.Add(nut);
+            GameManager.Instance.AddThing(nut);
         }
     }
 
@@ -76,7 +76,7 @@ public class Tree : Thing, IEdible, IOpenable, IPunchable
         {
             Output.WriteMessageLn("Du slår træet og der falder en nød ned");
             nutSpawn = true;
-            GameManager.Instance.things.Add(nut);
+            GameManager.Instance.AddThing(nut);
             punchedTree++;
         }
         if(punchedTree >= 3)

@@ -11,11 +11,6 @@ public sealed class ActionThing : Thing
     private static readonly object mutextLock = new object();
 
     /// <summary>
-    /// Reference to the player.
-    /// </summary>
-    public Player player = null;
-
-    /// <summary>
     /// Construct a new singleton action thing.
     /// </summary>
     public ActionThing()

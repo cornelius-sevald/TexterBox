@@ -5,6 +5,8 @@ public class Player : Thing
 {
     static private string id = "player";
 
+    public Location location = null;
+
     /// <summary>
     /// Construct a new player with an identifying noun,
     /// prepositions and adjectives.
@@ -17,6 +19,14 @@ public class Player : Thing
     /// </summary>
     public Player(string noun)
      : base(id, noun) { }
+    
+    public void GoToLocation(Thing thing)
+    {
+        if (thing is Location t) {
+            location.Leave(this);
+            t.Arrive(this);
+        }
+    }
 
     /// <summary>
     /// Throw something, if throwable.
@@ -99,6 +109,26 @@ public class Player : Thing
         if (thing is ICollectable t)
         {
             t.Collect();
+        }
+    }
+
+    /// <summary>
+    /// Wait for something, if waitable.
+    /// </summary>
+    /// <param name="thing">Thing to wait for.</param>
+    public void WaitForThing(Thing thing)
+    {
+        if (thing is IWaitable t)
+        {
+            t.Wait();
+        }
+    }
+
+    public void CrossThing(Thing thing)
+    {
+        if (thing is ICrossable t)
+        {
+            t.Cross();
         }
     }
 }

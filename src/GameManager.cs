@@ -16,11 +16,13 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
     private GameState state;
     private Token[] validTokens;
-    public List<Thing> things;
+    private List<Thing> things;
     private List<Interaction> interactions;
-    public Player player;
 
-    private int timeLeft;
+    public Player player = null;
+    public Location start = null;
+
+    public int timeLeft;
 
     /// <summary>
     /// Construct a new player with an identifying noun,
@@ -80,9 +82,31 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             nut
         );
 
-        action.player = player;
+        Car car = new Car(
+            "bil",
+            new string[] { },
+            new string[] {
+                "blå",
+                "hurtig"
+            }
+        );
 
-        things = new List<Thing> { this, action, player, ketchup, tree};
+        Road road = new Road(
+            "vej",
+            car
+        );
+
+        Food food = new Food(
+            "mad",
+            road
+        );
+
+        start = new Location("en legeplads", "legeplads", new List<Thing> {tree});
+        Location supermarket = new Location("supermarkedet", "supermarket", new List<Thing> {road, car, food});
+        Location home = new Location("dit hjem", "hjem", new List<Thing> {});
+
+
+        things = new List<Thing> { this, action, player, ketchup, start, supermarket, home};
 
         /* The interactions in the game: */
 
@@ -93,6 +117,10 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             // Program interactions:
             new Interaction(this, "luk",  player.CloseThing),
             new Interaction(this, "stop", player.StopThing),
+            // Location interactions:
+            new Interaction(start, "gå", player.GoToLocation),
+            new Interaction(supermarket, "gå", player.GoToLocation),
+            new Interaction(home, "gå", player.GoToLocation),
             // Ketchup interactions:
             new Interaction(ketchup, "kast", player.ThrowThing),
             new Interaction(ketchup, "spis", player.EatThing),
@@ -108,8 +136,30 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             new Interaction(nut, "åben", player.OpenThing),
             new Interaction(nut, "slå", player.PunchThing),
             new Interaction(nut, "hent", player.CollectThing),
-            new Interaction(nut, "kast", player.ThrowThing)
+            new Interaction(nut, "kast", player.ThrowThing),
+            // Car interactions
+            new Interaction(car, "vent", player.WaitForThing),
+            // Road interactions
+            new Interaction(road, "kryds", player.CrossThing),
+            new Interaction(road, "gå", player.CrossThing),
+            // Food interactions
+            new Interaction(food, "spis", player.EatThing),
+            new Interaction(food, "hent", player.CollectThing)
+            {
+                
+            }
         };
+
+    }
+
+    public void AddThing(Thing thing)
+    {
+        things.Add(thing);
+    }
+
+    public void RemoveThing(Thing thing)
+    {
+        things.Remove(thing);
     }
 
     /// <summary>
@@ -118,8 +168,6 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
     /// </summary>
     void AddDog()
     {
-        Player player = things.Find(t => t.Id == "player") as Player;
-
         Dog dog = new Dog(
             "hund",
             new string[] { },
@@ -151,6 +199,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
     /// </summary>
     public void GameLoop()
     {
+        start.Arrive(player);
         while (state == GameState.GameGaming)
         {
             if (--timeLeft <= 0)
