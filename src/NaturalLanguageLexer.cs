@@ -210,7 +210,7 @@ public static class TokenUtils
 
 /// <summary>
 /// Exception class used when reading tokens from a file.
-/// <see cref="TokenUtils.FromFile(string)"/>
+/// <seealso cref="TokenUtils.FromFile(string)"/>
 /// </summary>
 [System.Serializable]
 public class TokenReadException : System.Exception

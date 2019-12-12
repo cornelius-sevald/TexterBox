@@ -449,7 +449,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
     /// <summary>
     /// Close the game.
-    /// <see cref="GameManager.Stop"/>
+    /// <seealso cref="GameManager.Stop"/>
     /// </summary>
     public void Close()
     {
@@ -459,7 +459,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
     /// <summary>
     /// Stop the game.
-    /// <see cref="GameManager.Close"/>
+    /// <seealso cref="GameManager.Close"/>
     /// </summary>
     public void Stop()
     {

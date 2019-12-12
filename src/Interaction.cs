@@ -69,7 +69,7 @@ public class Interaction
 
 /// <summary>
 /// Class for giving information about a interaction match.
-/// <see cref="Interaction.Match(Sentence)"/>.
+/// <seealso cref="Interaction.Match(Sentence)"/>.
 /// </summary>
 public abstract class InteractionMatch {}
 
