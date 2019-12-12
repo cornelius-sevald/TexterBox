@@ -1,22 +1,26 @@
-/// <summary>
-/// Superclass for identifiable objects.
-/// </summary>
-public abstract class TexterObject {
-    private string id;
-
+namespace TexterBox
+{
     /// <summary>
-    /// The identifying string of this object.
-    /// Does not need to be unique.
+    /// Superclass for identifiable objects.
     /// </summary>
-    public string Id
+    public abstract class TexterObject
     {
-        get
+        private string id;
+
+        /// <summary>
+        /// The identifying string of this object.
+        /// Does not need to be unique.
+        /// </summary>
+        public string Id
         {
-            return id;
-        }
-        set
-        {
-            id = value;
+            get
+            {
+                return id;
+            }
+            set
+            {
+                id = value;
+            }
         }
     }
 }

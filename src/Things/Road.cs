@@ -1,56 +1,59 @@
-/// <summary>
-/// A road object that the player can walk over.
-/// <para>
-/// Road can be walked over.
-/// </para>
-/// </summary>
-public class Road : Thing, ICrossable
+namespace TexterBox
 {
-    static private string id = "vej";
-
     /// <summary>
-    /// Has the player crossed the road.
+    /// A road object that the player can walk over.
+    /// <para>
+    /// Road can be walked over.
+    /// </para>
     /// </summary>
-    public bool crossed = false;
-
-    /// <summary>
-    /// A car that crosses the road.
-    /// </summary>
-    public Car car = null;
-
-    /// <summary>
-    /// Construct a road object with an identifying noun,
-    /// prepositions and adjectives.
-    /// </summary>
-    public Road(string noun, string[] prepositions, string[] adjectives, Car car)
-     : base(id, noun, prepositions, adjectives)
+    public class Road : Thing, ICrossable
     {
-        this.car = car;
-    }
+        static private string id = "vej";
 
-    /// <summary>
-    /// Construct a road object with an identifying noun.
-    /// </summary>
-    public Road(string noun, Car car)
-     : base(id, noun)
-    {
-        this.car = car;
-    }
+        /// <summary>
+        /// Has the player crossed the road.
+        /// </summary>
+        public bool crossed = false;
 
-    /// <summary>
-    /// Cross the road.
-    /// </summary>
-    public void Cross()
-    {
-        if (car == null || car.waitedFor == true)
+        /// <summary>
+        /// A car that crosses the road.
+        /// </summary>
+        public Car car = null;
+
+        /// <summary>
+        /// Construct a road object with an identifying noun,
+        /// prepositions and adjectives.
+        /// </summary>
+        public Road(string noun, string[] prepositions, string[] adjectives, Car car)
+         : base(id, noun, prepositions, adjectives)
         {
-            crossed = !crossed;
-            Output.WriteMessageLn("Du går over vejen...");
+            this.car = car;
         }
-        else
+
+        /// <summary>
+        /// Construct a road object with an identifying noun.
+        /// </summary>
+        public Road(string noun, Car car)
+         : base(id, noun)
         {
-            Output.WriteMessageLn("En blå bil kørte dig over.");
-            GameManager.Instance.Lose("Med dine brækket ben, kan du ikke spise mad og du dør.");
+            this.car = car;
+        }
+
+        /// <summary>
+        /// Cross the road.
+        /// </summary>
+        public void Cross()
+        {
+            if (car == null || car.waitedFor == true)
+            {
+                crossed = !crossed;
+                Output.WriteMessageLn("Du går over vejen...");
+            }
+            else
+            {
+                Output.WriteMessageLn("En blå bil kørte dig over.");
+                GameManager.Instance.Lose("Med dine brækket ben, kan du ikke spise mad og du dør.");
+            }
         }
     }
 }
