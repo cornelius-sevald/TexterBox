@@ -1,127 +1,130 @@
-/// <summary>
-/// A Nut object that the player can interact with.
-/// <para>
-/// Nut can be thrown, eaten, opened, punched and collected.
-/// </para>
-/// </summary>
-public class Nut : Thing, IThrowable, IEdible, IOpenable, IPunchable, ICollectable
+namespace TexterBox
 {
-    static private string id = "nød";
-
     /// <summary>
-    /// Has the nut been destroyed?
+    /// A Nut object that the player can interact with.
+    /// <para>
+    /// Nut can be thrown, eaten, opened, punched and collected.
+    /// </para>
     /// </summary>
-    public bool destroyed = false;
-
-    /// <summary>
-    /// Has the nut been eaten?
-    /// </summary>
-    public bool eaten = false;
-
-    /// <summary>
-    /// Has the nut been collected?
-    /// </summary>
-    public bool collected = false;
-
-    /// <summary>
-    /// Construct a nut object with an identifying noun,
-    /// prepositions and adjectives.
-    /// </summary>
-    public Nut(string noun, string[] prepositions, string[] adjectives)
-     : base(id, noun, prepositions, adjectives) { }
-
-    /// <summary>
-    /// Construct a nut object with an identifying noun.
-    /// </summary>
-    public Nut(string noun)
-     : base(id, noun) { }
-
-    /// <summary>
-    /// Throw the nut.
-    /// </summary>
-    public void Throw()
+    public class Nut : Thing, IThrowable, IEdible, IOpenable, IPunchable, ICollectable
     {
-        if (!collected)
-        {
-            Output.WriteMessageLn("Du kan ikke kaste noget du ikke har");
-        }
-        else
-        {
-            GameManager.Instance.player.location.things.Add(this);
-            this.destroyed = true;
-            this.collected = false;
-            Output.WriteMessageLn("Du smider nøden på jorden og den går i stykker");
-        }
-    }
+        static private string id = "nød";
 
-    /// <summary>
-    /// Eat the nut.
-    /// </summary>
-    public void Eat()
-    {
-        if (!collected)
-        {
-            Output.WriteMessageLn("Du vil ikke æde noget fra jorden");
-        }
-        else
-        {
-            this.eaten = true;
-            Output.WriteMessageLn("Du spiser nøden; den smager meget godt.");
-            GameManager.Instance.Win("Med den kolde nød i din hals, vandt du videospillet B-)...");
-        }
-    }
+        /// <summary>
+        /// Has the nut been destroyed?
+        /// </summary>
+        public bool destroyed = false;
 
-    /// <summary>
-    /// Open the nut
-    /// </summary>
-    public void Open()
-    {
-        if (!collected)
-        {
-            Output.WriteMessageLn("Du holder ikke nogen nød");
-        } 
-        else
-        {
-            Output.WriteMessageLn("Du indser at man ikke behøver åbne en hasselnød for at spise den og lader være");
-        }
-    }
+        /// <summary>
+        /// Has the nut been eaten?
+        /// </summary>
+        public bool eaten = false;
 
-    /// <summary>
-    /// Collect the nut
-    /// </summary>
-    public void Collect()
-    {
-        if (destroyed)
-        {
-            Output.WriteMessageLn("Du kan ikke bruge en ødelagt nød til noget");
-        }
-        else if (collected)
-        {
-            Output.WriteMessageLn("Du har allerede nødden");
-        }
-        else 
-        {
-            this.collected = true;
-            GameManager.Instance.player.location.things.Remove(this);
-            Output.WriteMessageLn("Du samler nøden op");
-        }
-    }
+        /// <summary>
+        /// Has the nut been collected?
+        /// </summary>
+        public bool collected = false;
 
-    /// <summary>
-    /// Punch the nut
-    /// </summary>
-    public void Punch()
-    {
-        if (!collected)
+        /// <summary>
+        /// Construct a nut object with an identifying noun,
+        /// prepositions and adjectives.
+        /// </summary>
+        public Nut(string noun, string[] prepositions, string[] adjectives)
+         : base(id, noun, prepositions, adjectives) { }
+
+        /// <summary>
+        /// Construct a nut object with an identifying noun.
+        /// </summary>
+        public Nut(string noun)
+         : base(id, noun) { }
+
+        /// <summary>
+        /// Throw the nut.
+        /// </summary>
+        public void Throw()
         {
-            Output.WriteMessageLn("Du vil ikke slå noget der ligger på jorden");
+            if (!collected)
+            {
+                Output.WriteMessageLn("Du kan ikke kaste noget du ikke har.");
+            }
+            else
+            {
+                GameManager.Instance.player.location.things.Add(this);
+                this.destroyed = true;
+                this.collected = false;
+                Output.WriteMessageLn("Du smider nøden på jorden og den går i stykker.");
+            }
         }
-        else 
+
+        /// <summary>
+        /// Eat the nut.
+        /// </summary>
+        public void Eat()
         {
-            GameManager.Instance.player.location.things.Add(this);
-            this.destroyed = true;
-            this.collected = false;
-            Output.WriteMessageLn("Du slår nøden så den går i stykker og kaster den fra dig");
+            if (!collected)
+            {
+                Output.WriteMessageLn("Du vil ikke æde noget fra jorden.");
+            }
+            else
+            {
+                this.eaten = true;
+                Output.WriteMessageLn("Du spiser nøden; den smager meget godt.");
+                GameManager.Instance.Win("Med den kolde nød i din hals, vandt du videospillet... B-)");
+            }
+        }
+
+        /// <summary>
+        /// Open the nut
+        /// </summary>
+        public void Open()
+        {
+            if (!collected)
+            {
+                Output.WriteMessageLn("Du holder ikke nogen nød.");
+            }
+            else
+            {
+                Output.WriteMessageLn("Du indser at man ikke behøver åbne en hasselnød for at spise den og lader være.");
+            }
+        }
+
+        /// <summary>
+        /// Collect the nut
+        /// </summary>
+        public void Collect()
+        {
+            if (destroyed)
+            {
+                Output.WriteMessageLn("Du kan ikke bruge en ødelagt nød til noget.");
+            }
+            else if (collected)
+            {
+                Output.WriteMessageLn("Du har allerede nødden.");
+            }
+            else
+            {
+                this.collected = true;
+                GameManager.Instance.player.location.things.Remove(this);
+                Output.WriteMessageLn("Du samler nøden op.");
+            }
+        }
+
+        /// <summary>
+        /// Punch the nut
+        /// </summary>
+        public void Punch()
+        {
+            if (!collected)
+            {
+                Output.WriteMessageLn("Du vil ikke slå noget der ligger på jorden.");
+            }
+            else
+            {
+                GameManager.Instance.player.location.things.Add(this);
+                this.destroyed = true;
+                this.collected = false;
+                Output.WriteMessageLn("Du slår nøden så den går i stykker og kaster den fra dig.");
+            }
         }
     }
 }
