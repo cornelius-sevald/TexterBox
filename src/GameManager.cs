@@ -397,10 +397,10 @@ namespace TexterBox
         /// <param name="thing">Unused parameter.</param>
         public void Look(Thing thing)
         {
-            Output.WriteMessage("Du ser ");
+            string seeString = "Du ser ";
             if (things.Count == 0)
             {
-                Output.WriteMessageLn("ikke noget.");
+                seeString += "ikke noget.";
             }
             else
             {
@@ -415,12 +415,13 @@ namespace TexterBox
                         case "spil":
                             break;
                         default:
-                            Output.WriteMessage(lookThing.Id + ", ");
+                            seeString += lookThing.Id + ", ";
                             break;
                     }
                 }
-                Output.WriteMessageLn(things[i].Id + ".");
+                seeString += things[i].Id + ".";
             }
+            Output.WriteMessageLn(seeString);
         }
 
         /// <summary>
