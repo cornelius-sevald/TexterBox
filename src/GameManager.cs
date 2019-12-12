@@ -290,8 +290,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
             Sentence sentence = Sentence.EmptySentence();
             if (!Parser.ParseTokens(tokenized, ref sentence))
             {
-                Output.WriteMessageLn("Du forstår ikke hvad du selv tænker...");
-                Output.WriteMessageLn("Vær lidt mere specifik.");
+                Output.WriteMessageLn("Du forstår ikke hvad du selv tænker...\nVær lidt mere specifik.");
                 continue;
             }
             DoSentence(sentence);

@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using System.Threading;
 
 /// <summary>
@@ -19,9 +20,34 @@ public static class Output
     /// <param name="message">The message to write.</param>
     public static void WriteMessage(string message)
     {
+        const int ENTER = 13;
+        var _printDelay = printDelay;
+        var cursX = Console.CursorLeft;
+        var cursY = Console.CursorTop;
+
         foreach (char c in message) {
+
+            if (Console.KeyAvailable)
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                if (key.KeyChar == ENTER)
+                {
+                    Console.CursorTop = cursY;
+                    Console.CursorLeft = cursX;
+                }
+                else
+                {
+                    Console.CursorLeft = cursX;
+                }
+                _printDelay = 0;
+            }
+
             Console.Write(c);
-            Thread.Sleep(printDelay);
+
+            cursX = Console.CursorLeft;
+            cursY = Console.CursorTop;
+
+            Thread.Sleep(_printDelay);
         }
     }
 
