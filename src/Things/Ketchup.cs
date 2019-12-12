@@ -84,7 +84,7 @@ public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable, IColle
         else if (wasted)
         {
             Output.WriteMessageLn("Du slikker ketchuppen op fra jorden; meget klamt men det slukker sulten.");
-            GameManager.Instance.Win("Med den klamme ketchup i din hals, vandt du videospillet - hvis det virkelig kan kaldes at vinde B-)...");
+            GameManager.Instance.Win("Med den klamme ketchup i din hals, vandt du videospillet - hvis det virkelig kan kaldes at vinde... B-)");
         }
         else if (eaten)
         {
@@ -94,7 +94,7 @@ public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable, IColle
         {
             this.eaten = true;
             Output.WriteMessageLn("Du spiser ketchuppen; den smager meget godt.");
-            GameManager.Instance.Win("Med den kolde ketchup i din hals, vandt du videospillet B-)...");
+            GameManager.Instance.Win("Med den kolde ketchup i din hals, vandt du videospillet... B-)");
         }
     }
 
@@ -133,6 +133,10 @@ public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable, IColle
             Output.WriteMessageLn("Du må nøjes med åben ketchup.");
         }
     }
+
+    /// <summary>
+    /// Collect/Pick up the ketchup.
+    /// </summary>
     public void Collect()
     {
         if (thrown)
@@ -147,6 +151,9 @@ public class Ketchup : Thing, IThrowable, IEdible, IOpenable, ICloseable, IColle
         }
     }
 
+    /// <summary>
+    /// Give the ketchup to your mom.
+    /// </summary>
     public void Give()
     {
         if (!GameManager.Instance.things.Any(t => t.Id == "mor"))

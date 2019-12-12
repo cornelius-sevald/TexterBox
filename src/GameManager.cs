@@ -17,11 +17,25 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
 
     private GameState state;
     private Token[] validTokens;
+
+    /// <summary>
+    /// List of all loaded things.
+    /// </summary>
     public List<Thing> things;
+
+    /// <summary>
+    /// List of all possible interactions.
+    /// </summary>
     public List<Interaction> interactions;
 
+    /// <summary>
+    /// The video gamer.
+    /// </summary>
     public Player player = null;
 
+    /// <summary>
+    /// The amount of time left until the player dies.
+    /// </summary>
     public int timeLeft;
 
     private bool hungry = false;
@@ -374,6 +388,10 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         Lose("Fuck dig Klaus");
     }
 
+    /// <summary>
+    /// Method that allows displaying all loaded things to the player.
+    /// </summary>
+    /// <param name="thing">Unused parameter.</param>
     public void Look(Thing thing)
     {
         Output.WriteMessage("Du ser ");
@@ -402,6 +420,10 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         }
     }
 
+    /// <summary>
+    /// Method that allows the player to relieve themselves.
+    /// </summary>
+    /// <param name="thing">Unused parameter.</param>
     public void Shit(Thing thing)
     {
         if (GameManager.Instance.player.pants == true)
@@ -412,7 +434,7 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         else
         {
             Output.WriteMessageLn("Du skider på jorden");
-            GameManager.Instance.Win("Du ved ikke hvorfor, men med lorten på vejen fylder det dig med en vis tilfredsstilelse, du mærker ikke sulten mere...");
+            GameManager.Instance.Win("Du ved ikke hvorfor, men med lorten på vejen fylder det dig med en vis tilfredsstilelse, du mærker ikke sulten mere... B-)");
         }
     }
 
@@ -427,6 +449,8 @@ public sealed class GameManager : Thing, ICloseable, IStoppable
         Thread.Sleep(3000);
         Console.Clear();
         Output.WriteMessageLn(winMessage);
+        Thread.Sleep(1000);
+        Output.WriteMessageLn("Du har vundet videospillet. Tillykke.");
         System.Console.ReadKey();
     }
 

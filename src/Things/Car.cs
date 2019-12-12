@@ -1,3 +1,6 @@
+/// <summary>
+/// A car object that the player can slightly interact with.
+/// </summary>
 public class Car : Thing, IWaitable
 {
     static private string id = "bil";

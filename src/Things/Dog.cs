@@ -1,3 +1,9 @@
+/// <summary>
+/// A dog object that the player can interact with.
+/// <para>
+/// Dog can be eaten and punched.
+/// </para>
+/// </summary>
 public class Dog : Thing, IEdible, IPunchable
 {
     static private string id = "hund";
@@ -26,7 +32,9 @@ public class Dog : Thing, IEdible, IPunchable
     public Dog(string noun)
      : base(id, noun) { }
 
-
+    /// <summary>
+    /// Method to punch dog with.
+    /// </summary>
     public void Punch()
     {
         if (alive)
@@ -40,6 +48,9 @@ public class Dog : Thing, IEdible, IPunchable
         }
     }
 
+    /// <summary>
+    /// Method to eat the dog.
+    /// </summary>
     public void Eat()
     {
         if (alive)
@@ -50,7 +61,7 @@ public class Dog : Thing, IEdible, IPunchable
         else
         {
             Output.WriteMessageLn("Du spiser hunden.");
-            GameManager.Instance.Win("Med hundens varme kød i din mave, vandt du videospillet B-)...");
+            GameManager.Instance.Win("Med hundens varme kød i din mave, er du ikke sulten mere. Du vandt videospillet... B-)");
         }
     }
 }

@@ -5,6 +5,9 @@ public class Player : Thing
 {
     static private string id = "player";
 
+    /// <summary>
+    /// The location of the player.
+    /// </summary>
     public Location location = null;
 
     /// <summary>
@@ -30,6 +33,10 @@ public class Player : Thing
     public Player(string noun)
      : base(id, noun) { }
 
+    /// <summary>
+    /// Move the player to a new location, if said thing is a location.
+    /// </summary>
+    /// <param name="thing">Location to go to.</param>
     public void GoToLocation(Thing thing)
     {
         if (thing is Location t)

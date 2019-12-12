@@ -43,14 +43,14 @@ public class Nut : Thing, IThrowable, IEdible, IOpenable, IPunchable, ICollectab
     {
         if (!collected)
         {
-            Output.WriteMessageLn("Du kan ikke kaste noget du ikke har");
+            Output.WriteMessageLn("Du kan ikke kaste noget du ikke har.");
         }
         else
         {
             GameManager.Instance.player.location.things.Add(this);
             this.destroyed = true;
             this.collected = false;
-            Output.WriteMessageLn("Du smider nøden på jorden og den går i stykker");
+            Output.WriteMessageLn("Du smider nøden på jorden og den går i stykker.");
         }
     }
 
@@ -61,13 +61,13 @@ public class Nut : Thing, IThrowable, IEdible, IOpenable, IPunchable, ICollectab
     {
         if (!collected)
         {
-            Output.WriteMessageLn("Du vil ikke æde noget fra jorden");
+            Output.WriteMessageLn("Du vil ikke æde noget fra jorden.");
         }
         else
         {
             this.eaten = true;
             Output.WriteMessageLn("Du spiser nøden; den smager meget godt.");
-            GameManager.Instance.Win("Med den kolde nød i din hals, vandt du videospillet B-)...");
+            GameManager.Instance.Win("Med den kolde nød i din hals, vandt du videospillet... B-)");
         }
     }
 
@@ -78,11 +78,11 @@ public class Nut : Thing, IThrowable, IEdible, IOpenable, IPunchable, ICollectab
     {
         if (!collected)
         {
-            Output.WriteMessageLn("Du holder ikke nogen nød");
+            Output.WriteMessageLn("Du holder ikke nogen nød.");
         } 
         else
         {
-            Output.WriteMessageLn("Du indser at man ikke behøver åbne en hasselnød for at spise den og lader være");
+            Output.WriteMessageLn("Du indser at man ikke behøver åbne en hasselnød for at spise den og lader være.");
         }
     }
 
@@ -93,17 +93,17 @@ public class Nut : Thing, IThrowable, IEdible, IOpenable, IPunchable, ICollectab
     {
         if (destroyed)
         {
-            Output.WriteMessageLn("Du kan ikke bruge en ødelagt nød til noget");
+            Output.WriteMessageLn("Du kan ikke bruge en ødelagt nød til noget.");
         }
         else if (collected)
         {
-            Output.WriteMessageLn("Du har allerede nødden");
+            Output.WriteMessageLn("Du har allerede nødden.");
         }
         else 
         {
             this.collected = true;
             GameManager.Instance.player.location.things.Remove(this);
-            Output.WriteMessageLn("Du samler nøden op");
+            Output.WriteMessageLn("Du samler nøden op.");
         }
     }
 
@@ -114,14 +114,14 @@ public class Nut : Thing, IThrowable, IEdible, IOpenable, IPunchable, ICollectab
     {
         if (!collected)
         {
-            Output.WriteMessageLn("Du vil ikke slå noget der ligger på jorden");
+            Output.WriteMessageLn("Du vil ikke slå noget der ligger på jorden.");
         }
         else 
         {
             GameManager.Instance.player.location.things.Add(this);
             this.destroyed = true;
             this.collected = false;
-            Output.WriteMessageLn("Du slår nøden så den går i stykker og kaster den fra dig");
+            Output.WriteMessageLn("Du slår nøden så den går i stykker og kaster den fra dig.");
         }
     }
 }

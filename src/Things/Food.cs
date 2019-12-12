@@ -1,7 +1,16 @@
+/// <summary>
+/// A food object that the player can interact with.
+/// <para>
+/// Food can be eaten and collected.
+/// </para>
+/// </summary>
 public class Food : Thing, ICollectable, IEdible
 {
     static private string id = "mad";
 
+    /// <summary>
+    /// Reference to the road, to see if the player can pick up the food.
+    /// </summary>
     public Road road;
 
     /// <summary>
@@ -67,7 +76,7 @@ public class Food : Thing, ICollectable, IEdible
         {
             eaten = true;
             Output.WriteMessageLn("Du spiser maden. Den smager ikke specielt godt.");
-            GameManager.Instance.Win("Med middelmådigt supermarket-mad i dit spiserør, vinder du spillet B-)...");
+            GameManager.Instance.Win("Med middelmådigt supermarket-mad i dit spiserør, vinder du spillet... B-)");
         }
     }
 }

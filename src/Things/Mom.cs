@@ -1,3 +1,9 @@
+/// <summary>
+/// A mom object that the player cannot interact with.
+/// <para>
+/// Mom can be punched... but it's not a good idea.
+/// </para>
+/// </summary>
 public class Mom : Thing
 {
     static private string id = "mor";

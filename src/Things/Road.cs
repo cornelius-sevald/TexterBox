@@ -1,9 +1,21 @@
+/// <summary>
+/// A road object that the player can walk over.
+/// <para>
+/// Road can be walked over.
+/// </para>
+/// </summary>
 public class Road : Thing, ICrossable
 {
     static private string id = "vej";
 
+    /// <summary>
+    /// Has the player crossed the road.
+    /// </summary>
     public bool crossed = false;
 
+    /// <summary>
+    /// A car that crosses the road.
+    /// </summary>
     public Car car = null;
 
     /// <summary>

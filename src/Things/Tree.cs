@@ -1,7 +1,7 @@
 /// <summary>
 /// A tree object that the player can interact with.
 /// <para>
-/// Tree can be eaten, opened and punched
+/// Tree can be eaten, opened and punched.
 /// </para>
 /// </summary>
 public class Tree : Thing, IEdible, IOpenable, IPunchable
@@ -44,7 +44,7 @@ public class Tree : Thing, IEdible, IOpenable, IPunchable
     public void Eat()
     {
         this.eaten = true;
-        Output.WriteMessageLn("Du prøver at spise træet, men dens bark er for stærk");
+        Output.WriteMessageLn("Du prøver at spise træet, men dens bark er for stærk.");
         GameManager.Instance.Lose("Du har permanent ødelagt dine tænder og forbliver sulten...");
     }
 
@@ -55,27 +55,30 @@ public class Tree : Thing, IEdible, IOpenable, IPunchable
     {
         if(nutSpawn)
         {
-            Output.WriteMessageLn("Du åbner træet men der er ingen nødder derinde");
+            Output.WriteMessageLn("Du åbner træet men der er ingen nødder derinde.");
         }
         else
         {
-            Output.WriteMessageLn("Du åbner træet og finder en nød");
+            Output.WriteMessageLn("Du åbner træet og finder en nød.");
             nutSpawn = true;
             GameManager.Instance.things.Add(nut);
             GameManager.Instance.player.location.things.Add(nut);
         }
     }
 
+    /// <summary>
+    /// Punch the tree.
+    /// </summary>
     public void Punch()
     {
         if(nutSpawn)
         {
-            Output.WriteMessageLn("Du slår træet men der sker ingenting");
+            Output.WriteMessageLn("Du slår træet men der sker ingenting.");
             punchedTree++;
         }
         else
         {
-            Output.WriteMessageLn("Du slår træet og der falder en nød ned");
+            Output.WriteMessageLn("Du slår træet og der falder en nød ned.");
             nutSpawn = true;
             GameManager.Instance.things.Add(nut);
             GameManager.Instance.player.location.things.Add(nut);
@@ -83,11 +86,11 @@ public class Tree : Thing, IEdible, IOpenable, IPunchable
         }
         if(punchedTree >= 3)
         {
-            Output.WriteMessageLn("Din hånd gør ondt");
+            Output.WriteMessageLn("Din hånd gør ondt.");
         }
         if(punchedTree >= 10)
         {
-            GameManager.Instance.Lose("Du har slået træet for meget og du mistet alt energi i kroppen og kan derfor ikke spise");
+            GameManager.Instance.Lose("Du har slået træet for meget og du mistet alt energi i kroppen og kan derfor ikke spise.");
         }
     }
 }

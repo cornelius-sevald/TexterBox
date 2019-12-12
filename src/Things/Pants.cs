@@ -1,3 +1,9 @@
+/// <summary>
+/// A pants object that the player can interact with.
+/// <para>
+/// Tree can be eaten, thrown and collected.
+/// </para>
+/// </summary>
 public class Pants : Thing, IEdible, IThrowable, ICollectable
 {
     static private string id = "bukser";
@@ -25,6 +31,9 @@ public class Pants : Thing, IEdible, IThrowable, ICollectable
     public Pants(string noun)
      : base(id, noun) { }
 
+    /// <summary>
+    /// Eat pants.
+    /// </summary>
     public void Eat()
     {
         if (eaten)
@@ -38,6 +47,9 @@ public class Pants : Thing, IEdible, IThrowable, ICollectable
         }
     }
 
+    /// <summary>
+    /// Throw your pants away.
+    /// </summary>
     public void Throw()
     {
         if (worn)
@@ -52,6 +64,9 @@ public class Pants : Thing, IEdible, IThrowable, ICollectable
         }
     }
 
+    /// <summary>
+    /// Collect the pants.
+    /// </summary>
     public void Collect()
     {
         if (worn)

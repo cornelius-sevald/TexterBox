@@ -6,16 +6,25 @@ using System.Collections.Generic;
 public class Location : Thing
 {
 
+    /// <summary>
+    /// The name of the location.
+    /// </summary>
     public string name;
-    public List<Thing> things = null;
+
+    /// <summary>
+    /// List of things in a specified location. 
+    /// </summary>
+    public List<Thing> things;
 
     /// <summary>
     /// Construct a new location.
     /// </summary>
     /// <param name="id">The indentifier of the object.</param>
+    /// <param name="name">The name of the location.</param>
     /// <param name="noun">The noun describing this object.</param>
     /// <param name="prepositions">The prepositions describing this object.</param>
     /// <param name="adjectives">The adjectives describing this object.</param>
+    /// <param name="things">The things in this location.</param>
     public Location(string id, string name, string noun, string[] prepositions, string[] adjectives, List<Thing> things)
      : base(id, noun, prepositions, adjectives)
     {
@@ -27,7 +36,9 @@ public class Location : Thing
     /// Construct a new location with no prepositions or adjectives.
     /// </summary>
     /// <param name="id">The indentifier of the object.</param>
+    /// <param name="name">The name of the location.</param>
     /// <param name="noun">The noun describing this object.</param>
+    /// <param name="things">The things in this location.</param>
     public Location(string id, string name, string noun, List<Thing> things)
      : base(id, noun)
     {
@@ -43,7 +54,7 @@ public class Location : Thing
     {
         if (player.location == this)
         {
-            Output.WriteMessageLn("Du er allerede ved " + name);
+            Output.WriteMessageLn("Du er allerede ved " + name + ".");
             return;
         }
         Output.WriteMessageLn("Du ankommer ved " + name + ".");
@@ -64,7 +75,7 @@ public class Location : Thing
         {
             return;
         }
-        Output.WriteMessageLn("Du forlader " + Id);
+        Output.WriteMessageLn("Du forlader " + name + ".");
         player.location = null;
         foreach (Thing thing in things)
         {
